@@ -14,7 +14,8 @@
             <div>[ご購入内訳]</div>
             <ol>
                 {% for value in dataArr %}
-                    <li>{{value.item_name}} &yen;{{value.price|number_format(0, '.', ',')}}<br><li>
+                    <li>{{value.item_name}} &yen;{{value.price|number_format(0, '.', ',')}}×{{value.num}}個
+                    = &yen;{{(value.price * value.num)|number_format(0,'.', ',')}}<br><li>
                 {% endfor %}
             <ol>
         </div>

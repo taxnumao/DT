@@ -12,6 +12,7 @@ use shop\Bootstrap;
 use shop\lib\PDODatabase;
 use shop\lib\Session;
 use shop\lib\Cart;
+use shop\master\initMaster;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
@@ -36,7 +37,6 @@ $customer_no = $_SESSION['customer_no'];   //sessionCheck();でセットして�
 
 // item_idを取得する
 $item_id = (isset($_GET['item_id']) === true && preg_match('/^\d+$/', $_GET['item_id']) === 1) ? $_GET['item_id'] : ''; //登録用
-$crt_id = (isset($_GET['crt_id']) === true && preg_match('/^\d+$/', $_GET['crt_id']) === 1) ? $_GET['crt_id'] : ''; //削除用
 
 // item_idが設定されていれば、ショッピングカートに登録する
 if ($item_id !== '') {
@@ -48,20 +48,46 @@ if ($item_id !== '') {
     }
 }
 
-// crt_idが設定されていれば、削除する
-if ($crt_id !== '') {
-    $res = $cart->delCartData($crt_id);
+// 数量の変更
+if (isset($_POST['num']) === true) {
+   
+    $crt_id = $_POST['crt_id'];
+    $num = $_POST['num'];
+    $res = $cart->changeNum($crt_id, $num);
+
+    if ($res === false) {
+        echo "変更に失敗しました。";
+        exit();
+    }
 }
+
+// 削除
+if (isset($_POST['delete']) === true) {
+
+    $crt_id = $_POST['crt_id'];
+    $res = $cart->delCartData($crt_id);
+    
+    if ($res === false) {
+        echo "商品削除に失敗しました。";
+        exit();
+    }
+}
+
 // カート情報を取得する
 $dataArr = $cart->getCartData($customer_id);
+
 // アイテム数と合計金額を取得する。listは配列をそれぞれの変数に分ける
 // $cartSumAndNumData = $cart->getItemAndSumPrice($customer_no);
 list($sumNum, $sumPrice) = $cart->getItemAndSumPrice($customer_id);
 
+$numArr = initMaster::getNum();
+
 $context = [];
+$context['numArr'] = $numArr;
 $context['sumNum'] = $sumNum;
 $context['sumPrice'] = $sumPrice;
 $context['dataArr'] = $dataArr;
 $template = $twig->loadTemplate('cart.html.twig');
 $template->display($context);
 
+var_dump($dataArr);

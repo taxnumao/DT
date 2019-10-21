@@ -55,4 +55,15 @@ class initMaster
         return $entryArr;
     }
 
+    public static function getNum()
+    {
+        $numArr = [];
+
+        for ($i = 1; $i < 11; $i ++) {
+            $num = $i;
+            $numArr[$num] = $num . '個';
+        }
+        return $numArr;
+    }
+
 }

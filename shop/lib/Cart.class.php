@@ -30,7 +30,7 @@ class Cart
     public function getCartData($customer_id)
     {
         $table = ' cart c LEFT JOIN item i ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ';
-        $column = ' s.customer_id, c.crt_id, i.item_id, i.item_name, i.price,i.image ';
+        $column = ' s.customer_id, c.crt_id, c.num, i.item_id, i.item_name, i.price, i.image';
         $where = ' s.customer_id = ? AND c.delete_flg = ? ';
         $arrVal = [$customer_id, 0];
 
@@ -53,13 +53,12 @@ class Cart
     {
         // 合計金額
         $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ";
-        $column = " SUM( i.price ) AS totalPrice ";
+        $column = " SUM( i.price*c.num ) AS totalPrice ";
         $where = ' s.customer_id  = ? AND c.delete_flg = ?';
         $arrWhereVal = [$customer_id, 0];
 
         $res = $this->db->select($table, $column, $where, $arrWhereVal);
         $price = ($res !== false && count($res) !== 0) ? $res[0]['totalPrice'] : 0;
-        
 
         // アイテム数
         $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ";
@@ -67,6 +66,19 @@ class Cart
         $res = $this->db->select($table, $column, $where, $arrWhereVal);
 
         $num = ($res !== false && count($res) !== 0) ? $res[0]['num'] : 0;
+
         return [$num, $price];
+    }
+
+    // 数量変更
+    public function changeNum($crt_id, $num)
+    {
+        $table = "cart";
+        $insData = ['num' => $num];
+        $where = "crt_id = ?";
+        $arrWhereVal = [$crt_id];
+        
+        $res = $this->db->update($table, $insData, $where, $arrWhereVal);
+        return $res;
     }
 }

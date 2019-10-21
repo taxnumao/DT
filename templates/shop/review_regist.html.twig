@@ -1,0 +1,56 @@
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet" type="text/css" />
+        <title>口コミ投稿画面</title>
+    </head>
+    <body>
+        <div>
+            <h1>口コミを書く</h1>
+            <form method="post" action="review_confirm.php">
+                <table>
+                    <tr>
+                        <th>ニックネーム<span class="red">*</span></th>
+                        <td>
+                            <input type="text" name="nickname" value="{{dataArr.nickname}}" />
+                            {% if errArr.nickname | length > 0 %}<br><span class="red">{{errArr.nickname}}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>評価<span class="red">*</span></th>
+                        <td>
+                           <select name="score" >
+                                {% for index, label in scoreArr %}
+                                <option value="{{index}}" {% if dataArr.score == index %} selected {% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errArr.score | length > 0 %}<br><span class ="red">{{errArr.score}}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>項目<span class="red">*</span></th>
+                        <td>
+                            <select name="entry" >
+                                {% for index, label in entryArr %}
+                                <option value="{{index}}" {% if dataArr.entry == index %} selected {% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errArr.entry | length > 0 %}<br><span class ="red">{{errArr.entry}}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td>
+                            <textarea name="contents" rows="4" cols="40">{{dataArr.contents}}</textarea>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <input type="button" name="back" value="戻る" onclick="history.back(); return false;">
+                    <input type="submit" name="confirm" value="口コミ内容確認" />
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

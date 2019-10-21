@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet">
+        <title>注文確認画面</title>
+    </head>
+    <body>
+        <h2>以下の商品で注文を確定しますか？</h2>
+        <table border="1">
+            <p><td>カート内商品数 ： {{sumNum}}個</td><td> 合計金額 ：&yen;{{sumPrice|number_format(0, '.', ',')}}</td></p>
+        </table><br>
+        <div class="item">
+            <div>[ご購入内訳]</div>
+            <ol>
+                {% for value in dataArr %}
+                    <li>{{value.item_name}} &yen;{{value.price|number_format(0, '.', ',')}}<br><li>
+                {% endfor %}
+            <ol>
+        </div>
+        <div>
+            <form method="post" action="">
+                <input type="button" value="戻る"  onclick="history.back(); return false;" >
+                <input type="submit" name="decision" value="注文確定します">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <title>口コミ一覧</title>
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div>
+            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_regist.php">口コミを書く</a><span class="red">※</span>商品購入を行なった方のみ、記入頂けます<br>
+            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">商品一覧へ戻る</a>
+        </div>
+        <h2>今までの口コミ♪♪</h2>
+        <div id="review_zone">
+            <div class="review">
+            {% for value in dataArr %}
+                <div>{{value.nickname}}さん &nbsp;　{{value.regist_date}}<br>
+                点数:{{value.score}}点 &nbsp; {% if value.entry == '1' %}商品について{% elseif value.entry == '2'  %}配送について{% elseif value.entry == '3'  %}その他{% endif  %}<br>
+                内容: {{value.contents}}<br>
+                </div><br>
+            {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

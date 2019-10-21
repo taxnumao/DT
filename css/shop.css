@@ -1,0 +1,99 @@
+li {
+    list-style-type : none;
+}
+
+div#wrapper {
+    text-align : center;
+    width :470px;
+    position: relative;
+}
+
+div#wrapper div#category {
+    float : left;
+    width : 120px;
+    text-align : left;
+} 
+
+div#wrapper div#item_list,
+div#wrapper div#item_detail {
+    width : 330px;
+    text-align : left;
+    float : right;
+}
+
+div#wrapper div#item_list div.item ul {
+    overflow : hidden;
+    height : auto;
+}
+
+div#wrapper div#item_list div.item .name {
+    font-size : 16px;
+    font-weight : bold;
+}
+
+div#wrapper div#item_list div.item .price {
+    color : #900;
+}
+
+div#wrapper div#item_list div.item ul li.detail {
+    text-align : right;
+    font-weight : bold;
+    vertical-align : bottom; 
+}
+
+div#wrapper div#item_list div.item .image {
+    padding : 0 4px;
+    text-align : left;
+}
+
+div#wrapper div#cart_list div.item {
+    text-align : right;
+    overflow : hidden;
+    height : auto;
+}
+
+div#wrapper div#cart_list div.item .image {
+    float : left;
+}
+
+.red {
+    color : #f00;
+    font-size : 12px;
+}
+
+
+div#right {
+    width : 53%;
+    float: right;
+    font-size: 13pt;
+    color: black;
+
+}
+
+div.main {
+    width: 100%;
+}
+
+header {
+    float: right;
+}
+
+ h2 { 
+    font-size:40pt;  
+    color:#f6f6f6;
+    margin:-20px 0px -30px 0px; 
+    letter-spacing:-4pt; 
+}
+
+footer {
+    text-align: right;
+    font-size: 14pt;
+    width: 98%;
+    margin: 10pt;
+    border-bottom: solid 1px black;
+    border-top: solid 1px black;
+    color: black;
+    bottom: 0;
+    position: fixed;
+}
+

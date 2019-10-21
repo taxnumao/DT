@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8" />
+            <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/common.js"></script>
+            <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet" type="text/css" />
+            <title>お問い合わせフォーム</title>
+        </head>
+        <body>
+            <h1>お問い合わせ</h1>
+            <div>きぬ太商店へのご要望：ご指摘お聞かせください</div>
+            <form method="post" action="form_confirm.php">
+                <table>
+                    <tr>
+                        <th>お名前(氏名)<span class="red">*</span></th>
+                        <td>
+                            <input type="text" name="family_name" value="{{dataArr.family_name}}" />
+                            <input type="text" name="first_name" value="{{dataArr.first_name}}" />
+                            {% if errArr.family_name | length > 0 %}<br><span class="red">{{ errArr. family_name }}</span>{% endif %}
+                            {% if errArr.first_name | length > 0 %}<br><span class="red">{{ errArr. first_name }}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>お名前(かな)</th>
+                        <td>
+                            <input type="text" name="family_name_kana" value="{{dataArr.family_name_kana}}" />
+                            <input type="text" name="first_name_kana" value="{{dataArr.first_name_kana}}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性別<span class="red">*</span></th>
+                        <td>
+                            {% for index, label in sexArr %}
+                            <input type="radio" name="sex" value="{{index}}" id="sex_{{index}}" {% if dataArr.sex == index %} checked="checked" {% endif %} >
+                            <label for="sex_{{index}}">{{label}}</label>
+                            {% endfor %}
+                            {% if errArr.sex | length > 0 %}<br><span class="red">{{errArr.sex}}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>メールアドレス<span class="red">*</span></th>
+                        <td>
+                            <input type="text" name="email" value="{{dataArr.email}}" size="40" />
+                            {% if errArr.email | length > 0 %}<br><span class="red">{{errArr.email}}</span>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>問い合わせ内容</th>
+                        <td>
+                            <textarea name="contents" rows="6" cols="50">{{dataArr.contents}}</textarea>
+                            {% if errArr.contents | length > 0 %}<br><span class="red">{{errArr.contents}}</span>{% endif %}
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <input type="button" name="back" value="戻る" onclick="history.back(); return false;">
+                    <input type="submit" name="confirm" value="お問い合わせ内容確認" />
+                </div>
+            </form>
+        </body>
+    </html>

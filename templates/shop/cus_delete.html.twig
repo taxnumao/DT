@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>退会手続き</title>
+    </head>
+    <body>
+        <div>{{dataArr.login_id}}様、本当に退会されますか？</div>
+        <form method="post" action="">
+            <input type="submit" name="yes" value="はい">
+            <input type="button" name="back" value="やっぱり、退会しない" onclick="history.back(); return false;">
+        </form>
+    </body>
+</html>

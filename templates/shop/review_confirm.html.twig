@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet" type="text/css" />
+        <title>会員登録確認</title>
+    </head>
+    <body>
+        <form method="post" action="review_confirm.php">
+            <table>
+                <tr>
+                    <th>ニックネーム</th>
+                    <td>{{dataArr.nickname}}</td>
+                </tr>
+                <tr>
+                    <th>評価</th>
+                    <td>{{dataArr.score}}点</td>
+                </tr>
+                <tr>
+                    <th>項目</th>
+                    <td>{% if dataArr.entry == '1' %}商品について{% elseif dataArr.entry == '2' %}配送について{% elseif dataArr.entry == '3' %}その他{% endif  %}</td>
+                </tr>
+                <tr>
+                    <th>口コミ内容</th>
+                    <td>{{dataArr.contents|nl2br}}</td>
+                </tr>
+            </table>
+                <input type="submit" name="back" value="戻る" />
+                <input type="submit" name="complete" value="登録完了" />
+                {% for key,value in dataArr %}
+                    <!-- ↓下記メソッドで配列か否かチェックしている -->
+                    {% if value is iterable %}
+                        {% for v in value %}
+                            <input type="hidden" name="{{key}}[]" value="{{v}}" />
+                        {% endfor %}
+                    {% else %}
+                        <input type="hidden" name="{{key}}" value="{{value}}" />
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </form>
+    </body>
+</html>

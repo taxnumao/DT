@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/search.js"></script>
+        <title>商品一覧</title>
+    </head>
+    <body>
+        <h1> きぬ太商店</h1>
+        <div class="header">
+            <div>
+                ゲストさん、こんにちわ！ 
+            </div>
+            <div>
+                <p>ご注文の方は、<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">ログイン</a>
+                もしくは<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}regist.php">会員登録</a>を行って下さい</p>
+            </div>
+        </div>
+        <div id="wrapper">
+            {% include 'category_menu_guest.html.twig' %}
+            <div>
+                お問い合わせは<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">こちら</a>
+            </div>
+            <div class="search-area">
+                <form>
+                    <input type="text" id="search-text" placeholder="検索ワードを入力">
+                </form>
+                <div class="search-result">
+                    <div class="search-result__hit-num"></div>
+                    <div id="search-result__list"></div>
+                </div>
+            </div>
+            <div id="item_list">
+                {% for value in dataArr %}
+                    <div class="item">
+                        <ul>
+                            <li class="name">
+                               {{value.item_name}}
+                            </li>
+                            <li class="price">
+                                &yen;{{value.price|number_format(0, '.', ',')}}
+                            </li>
+                            <li class="image">
+                                <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}  
+            </div>
+        </div>
+    </body>
+</html>

@@ -19,39 +19,39 @@
                 {% if dataArr | length == 0 %}
                     <p>カートに商品は入っていません</p>
                 {% else %}
-                    {% for value in dataArr %}
-                        <div class="item">
-                            <table border="1" width="80%">
-                                <tr>
-                                    <th>商品名</th><th>画像</th><th>値段</th><th>個数</th><th>小計</th><th>削除ボタン</th>
-                                </tr>
-                                <tr>
-                                    <td>{{value.item_name}}</td>
-                                    <td class="image"><img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}"></td>
-                                    <td>&yen;{{value.price|number_format(0, '.', ',')}}</td>
-                                    <td>
-                                        現在:{{value.num}}個<br>
-                                        <form method="post" action="cart.php">
-                                            <select name="num" >
-                                                {% for index, label in numArr %}
-                                                <option value="{{index}}" {% if value.num == index %} selected {% endif %}>{{ label }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <input type="hidden" name="crt_id" value="{{value.crt_id}}">
-                                            <input type="submit" name="update" value="数量変更">
-                                        </form>
-                                    </td>
-                                    <td>&yen;{{(value.num * value.price)|number_format(0, '.', ',')}}</td>
-                                    <td>
-                                        <form method="post" action="cart.php">
-                                            <input type="hidden" name="crt_id" value="{{value.crt_id}}">
-                                            <input type="submit" name="delete" value="削除">
-                                        </form>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    {% endfor %}
+                    <div class="item">
+                        <table border="1" width="80%">
+                            <tr>
+                                <th>商品名</th><th>画像</th><th>値段</th><th>個数</th><th>小計</th><th>削除ボタン</th>
+                            </tr>
+                            {% for value in dataArr %}
+                            <tr>
+                                <td>{{value.item_name}}</td>
+                                <td class="image"><img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}"></td>
+                                <td>&yen;{{value.price|number_format(0, '.', ',')}}</td>
+                                <td>
+                                    現在:{{value.num}}個<br>
+                                    <form method="post" action="cart.php">
+                                        <select name="num" >
+                                            {% for index, label in numArr %}
+                                            <option value="{{index}}" {% if value.num == index %} selected {% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="crt_id" value="{{value.crt_id}}">
+                                        <input type="submit" name="update" value="数量変更">
+                                    </form>
+                                </td>
+                                <td>&yen;{{(value.num * value.price)|number_format(0, '.', ',')}}</td>
+                                <td>
+                                    <form method="post" action="cart.php">
+                                        <input type="hidden" name="crt_id" value="{{value.crt_id}}">
+                                        <input type="submit" name="delete" value="削除">
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 {% endif %}
             </div>
         </div>

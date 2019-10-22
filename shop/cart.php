@@ -29,22 +29,34 @@ $twig = new \Twig_Environment($loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
-
-$customer_id = $_SESSION['customer_id'];
 // セッションに、セッションIDを設定する
+$customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
 $customer_no = $_SESSION['customer_no'];   //sessionCheck();でセットしてる
 
 // item_idを取得する
 $item_id = (isset($_GET['item_id']) === true && preg_match('/^\d+$/', $_GET['item_id']) === 1) ? $_GET['item_id'] : ''; //登録用
 
+// カート情報を取得する
+$itemArr = $cart->getCartData($customer_id);
+
 // item_idが設定されていれば、ショッピングカートに登録する
 if ($item_id !== '') {
-    $res = $cart->insCartData($customer_no, $item_id);
-    // 登録に失敗した場合、エラーページを表示する
-    if ($res === false) {
-        echo "商品購入に失敗しました。";
-        exit();
+    $seaArr = [];
+    foreach ($itemArr as $key => $value) {
+        $seaArr[]= $value['item_id'];
+    }
+    
+    if (array_search($item_id, $seaArr) === false) {
+        $res = $cart->insCartData($customer_no, $item_id);
+        // 登録に失敗した場合、エラーページを表示する
+        if ($res === false) {
+            echo "商品購入に失敗しました。";
+            exit();
+        }
+    } else {
+        // メッセージ表示
+        echo "既にカートに同じ商品が入っています。";
     }
 }
 
@@ -89,5 +101,3 @@ $context['sumPrice'] = $sumPrice;
 $context['dataArr'] = $dataArr;
 $template = $twig->loadTemplate('cart.html.twig');
 $template->display($context);
-
-var_dump($dataArr);

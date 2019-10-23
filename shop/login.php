@@ -12,6 +12,7 @@ use shop\Bootstrap;
 use shop\lib\PDODatabase;
 use shop\lib\Common;
 use shop\lib\Session;
+use shop\lib\Login;
 
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
@@ -23,6 +24,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $common = new Common();
+$login = new Login();
 
 
 $mode = '';
@@ -53,21 +55,9 @@ switch ($mode) {
 
         } else {
 
-            $table = 'customer';
-            $where = 'login_id = ? AND pass1 = ? AND delete_flg = ?';
-            $insData = [];
-            $dataArr['delete_flg'] = 0;
-            $insData[] = $dataArr['login_id'];
-            $insData[] = $dataArr['pass1'];
-            $insData[] = $dataArr['delete_flg'];
-            $data = '';
-
-            $data = $db->select($table, $column = '', $where, $insData);
+           $data = $login->login($db, $dataArr);
 
             // 該当のcustomerのデータを取ってくる
-            // customer_idが欲しい
-            // $data = array(1) { [0]=> array(23) { ["customer_id"]=> string(1) "1" ["family_name"]=> string(1) "a" ["first_name"]=> string(1) "a" ["family_name_kana"]=> string(1) "a" ["first_name_kana"]=> string(1) "a" ["sex"]=> string(1) "1" ["login_id"]=> string(1) "a" ["pass1"]=> string(32) "0cc175b9c0f1b6a831c399e269772661" ["year"]=> string(4) "1900" ["month"]=> string(2) "01" ["day"]=> string(2) "01" ["zip1"]=> string(3) "111" ["zip2"]=> string(4) "1111" ["address"]=> string(2) "11" ["email"]=> string(8) "11@11.11" ["tel1"]=> string(3) "111" ["tel2"]=> string(3) "111" ["tel3"]=> string(3) "111" ["contents"]=> string(1) "a" ["regist_date"]=> string(19) "2019-10-10 02:58:09" ["update_date"]=> NULL ["delete_date"]=> NULL ["delete_flg"]=> string(1) "0" } }
-            // $data は多次元連想配列
 
             if ($data) {
 

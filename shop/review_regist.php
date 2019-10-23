@@ -16,6 +16,13 @@ use shop\lib\Session;
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
 
+
+// 買ってないひと
+if (!isset($_SESSION['sale'])) {
+    header('Location:' . Bootstrap::ENTRY_URL . 'review_list.php');
+    exit();
+}
+
 // twig設定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [

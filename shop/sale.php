@@ -62,6 +62,9 @@ if (isset($_POST['decision'])) {
         $cus = new Customer($db);
         $customerArr = $cus->getCustomer($customer_id);
 
+        // 口コミ用
+        $_SESSION['sale'] = 'ok';
+
         // mailの送信
         $name = $customerArr[0]['family_name'];
         $header = $customerArr[0]['email'];

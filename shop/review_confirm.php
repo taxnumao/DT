@@ -25,10 +25,10 @@ $common = new Common();
 $ses = new Session($db);
 $rev = new Review($db);
 
-// 未ログイン排除
-if (isset($customer_id) === '') {
-    header('location:'. Bootstrap::ENTRY_URL . 'login.php');
-    exit(); 
+// 買ってないひと
+if (!isset($_SESSION['sale'])) {
+    header('Location:' . Bootstrap::ENTRY_URL . 'review_list.php');
+    exit();
 }
 
 // sessionチェック

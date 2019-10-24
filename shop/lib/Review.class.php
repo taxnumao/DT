@@ -9,6 +9,7 @@ class Review
 {
 
     private $db = null;
+    private $strOrder = '';
 
     public function __construct($db = null)
     {
@@ -34,6 +35,8 @@ class Review
         $strOrder = 'review_id DESC';
         $this->db->setOrder($strOrder);
 
-        return $this->db->select($table);
+        $res = $this->db->select($table);
+
+        return $res;
     }
 }

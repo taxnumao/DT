@@ -12,7 +12,7 @@ class Login {
     // ログイン
     public function login($db, $dataArr) {
 
-        $table = 'customer';
+        $table = 'customer';                        //LEFT JOIN sale s ON s.customer_id = c.customer_id
         $where = 'login_id = ? AND pass1 = ? AND delete_flg = ?';
         $insData = [];
         $dataArr['delete_flg'] = 0;
@@ -26,3 +26,4 @@ class Login {
         return $data;
     }
 }
+

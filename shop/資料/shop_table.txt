@@ -17,11 +17,18 @@ shop_db
         	price DECIMAL(10,3) unsigned not null,
         	image varchar(50) not null,
         	ctg_id tinyint unsigned not null,
+		staff_id int unsigned default 1,
+		regist_date datetime,
+		update_date datetime,
+		delete_date datetime,
+		delete_flg tinyint(1) unsigned not null default 0,
         	primary key(item_id),
         	index item_idx(ctg_id)                    
  	);
 		// デシマル : decimal(最大桁数、小数点以下の桁数)
 		// インデックス : データの検索速度を向上させるために、どの行がどこにあるのかを示した索引のこと
+
+
 
     	// カート(取引)
     	CREATE TABLE cart (
@@ -144,6 +151,42 @@ shop_db
 		primary key(review_id)
 	);
 
+	// スタッフ
+	CREATE TABLE staff (
+        	staff_id int unsigned not null auto_increment,
+        	family_name varchar(20) not null,
+        	first_name varchar(20) not null,
+        	family_name_kana varchar(20) not null,
+        	first_name_kana varchar(20) not null,
+        	sex tinyint(1) unsigned not null,
+        	login_id varchar(30) not null,
+       	 	pass1 varchar(50) not null,
+        	year varchar(4) not null,
+        	month varchar(2) not null,
+        	day varchar(2) not null,
+        	zip1 varchar(3) not null,
+        	zip2 varchar(4) not null,
+        	address varchar(100) not null, 
+        	email varchar(255) not null,
+        	tel1 varchar(6) not null,
+        	tel2 varchar(6) not null,
+        	tel3 varchar(6) not null,
+		traffic varchar(20) not null,
+        	contents text not null,
+        	regist_date datetime not null,
+        	update_date datetime,
+        	delete_date datetime,
+        	delete_flg tinyint(1) unsigned not null default 0,
+        	primary key (staff_id)
+ 	);
+
+	// スタッフの認識
+  	  CREATE TABLE staff_session (
+     	  	 staff_no int unsigned not null auto_increment,
+     	  	 session_key varchar(32),
+		 staff_id int unsigned not null,
+     	  	 primary key(staff_no)
+  	  );
 
 
 

@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/search.js"></script>
         <script src="{{constant('shop\\Bootstrap::APP_URL')}}js/shop.js"></script>
         <title>商品一覧</title>
     </head>
@@ -29,17 +28,11 @@
         </div>
         <div id="wrapper">
             {% include 'category_menu.html.twig' %}
-            <div>
-                お問い合わせは<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">こちら</a>
-            </div>
             <div class="search-area">
-                <form>
-                    <input type="text" id="search-text" placeholder="検索ワードを入力">
+                <form method="get" action="">
+                    <input type="text" name="text" placeholder="検索ワードを入力">
+                    <input type="submit" name="search" value="検索" >
                 </form>
-                <div class="search-result">
-                    <div class="search-result__hit-num"></div>
-                    <div id="search-result__list"></div>
-                </div>
             </div>
             <div id="item_list">
                 {% for value in dataArr %}

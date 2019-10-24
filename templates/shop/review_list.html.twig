@@ -8,9 +8,8 @@
     <body>
         <div>
             <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_regist.php">口コミを書く</a><span class="red">※</span>商品購入を行なった方のみ、記入頂けます<br>
-            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">商品一覧へ戻る</a>
+            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">商品一覧</a>
         </div>
-        <h2>今までの口コミ♪♪</h2>
         <div id="review_zone">
             <div class="review">
             {% for value in dataArr %}

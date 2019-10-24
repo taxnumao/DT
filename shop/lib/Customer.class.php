@@ -13,6 +13,23 @@ class Customer {
         $this->db = $db;
     }
 
+    // 顧客登録
+    public function registCustomer($dataArr) {
+
+        unset($dataArr['complete']);
+        unset($dataArr['pass2']);
+
+        $dataArr['pass1'] = md5($dataArr['pass1']);
+        $dataArr['regist_date'] = date("Y/m/d H:i:s");
+
+        $table = 'customer';
+        
+        $res = '';
+        $res = $this->db->insert($table, $dataArr);
+
+        return $res;
+    }
+
     // 顧客データ(mail用)の取得
     public function getCustomer($customer_id) {
         $table = 'customer';

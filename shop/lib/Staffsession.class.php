@@ -1,11 +1,11 @@
 <?php
 /*
- * ファイルパス : \Application\xampp\htdocs\DT\shop\lib\Session.class.php
- * ファイル名 : Session.class.php (セッション関係のクラスファイル、Model)
+ * ファイルパス : \Application\xampp\htdocs\DT\shop\lib\Staffsession.class.php
+ * ファイル名 : Staffsession.class.php (セッション関係のクラスファイル、Model)
  */ 
 namespace shop\lib;
 
-class Session
+class Staffsession
 {
     public $session_key = '';
     public $db = NULL;
@@ -20,39 +20,39 @@ class Session
         $this->db = $db;
     }
 
-    public function checkSession($customer_id)
+    public function checkSession($staff_id)
     {
         // セッションIDのチェック
-        $customer_no = $this->selectSession();
+        $staff_no = $this->selectSession();
         // セッションIDがある(過去にショッピングカートに来たことがある)
-        if ($customer_no !== false) {
-            $_SESSION['customer_no'] = $customer_no;
+        if ($staff_no !== false) {
+            $_SESSION['staff_no'] = $staff_no;
         } else {
             // セッションIDがない(初めてこのサイトに来ている)
-            $res = $this->insertSession($customer_id);
+            $res = $this->insertSession($staff_id);
             if ($res === true) {
-                $_SESSION['customer_no'] = $this->db->getLastId();
+                $_SESSION['staff_no'] = $this->db->getLastId();
             } else {
-                $_SESSION['customer_no'] = '';
+                $_SESSION['staff_no'] = '';
             }
         }
     }
 
     private function selectSession()
     {
-        $table = ' session ';
-        $col = ' customer_no ';
+        $table = ' staff_session ';
+        $col = ' staff_no ';
         $where = ' session_key = ?';
         $arrVal = [$this->session_key];
 
         $res = $this->db->select($table, $col, $where, $arrVal);
-        return (count($res) !== 0) ? $res[0]['customer_no'] : false;
+        return (count($res) !== 0) ? $res[0]['staff_no'] : false;
     }
 
-    private function insertSession($customer_id)
+    private function insertSession($staff_id)
     {
         $table = ' session ';
-        $insData = ['session_key ' => $this->session_key, 'customer_id' => $customer_id];
+        $insData = ['session_key ' => $this->session_key, 'staff_id' => $staff_id];
         $res = $this->db->insert($table, $insData);
         return $res;
     }

@@ -61,6 +61,8 @@ switch ($mode) {
 
             if ($data) {
 
+                var_dump($data);
+
                 $customer_id = $data[0]['customer_id'];
                 $ses = new Session($db);
                 $ses->checkSession($customer_id);

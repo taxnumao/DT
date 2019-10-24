@@ -28,57 +28,44 @@ if (!isset($_SESSION['login_id'])) {
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [
-    'cache' => Bootstrap::CACHE_DIR,
-    'debug' => true
+    'cache' => Bootstrap::CACHE_DIR
 ]);
-$twig->addExtension(new \Twig\Extension\DebugExtension());
 
-$customer_id = $_SESSION['customer_id'];
 // SessionKeyを見て、DBへの登録状態をチェックする
+$customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
 $customer_no = $_SESSION['customer_no']; 
 
 $sesArr['login_id'] = $_SESSION['login_id'];
 
 $ctg_id = (isset($_GET['ctg_id']) === true && preg_match('/^[0-9]+$/', $_GET['ctg_id']) === 1) ? $_GET['ctg_id'] : '';
-
+$text = (isset($_GET['text']) === true) ? $_GET['text'] : '';
 
 // カテゴリーリスト(一覧)を取得
 $cateArr = $itm->getCategoryList();
+
 // 商品リストを取得
 $dataArr = $itm->getItemList($ctg_id);
+
 // 口コミを取得
 $reviewArr = $rev->getReviewData();
 
-// 検索窓の機能 あとでやる
-// $data = [];
-// if (isset($_POST['search'])) {
-//     unset($_POST['search']);
-//     $search = $_POST['item_name'];
-//     $table = 'item';
-//     $where = 'item_name = ?';
-//     $arrVal = [];
-//     $arrVal[] = "LIKE %" . $search . "%";
-
-//     $data = $db->select($table, $column = '', $where, $arrVal);
-//     //sql = SELECT * FROM item  WHERE item_name LIKE '%$search%';
-    
-//     if ($data) {
-//         echo 'ok';
-//     } else {
-//         echo 'no';
-//     }
-    
-// }
-
+// 検索窓
+if (isset($_GET['text']) === true) {
+    $dataArr = $itm->getItemSearch($text);
+    if (!$dataArr) {
+        echo '一致する検索結果はありません';
+        $dataArr = $itm->getItemList($ctg_id);
+    }
+}
 
 $context = [];
-// $context['data'] = $data;
-// テスト↑
 $context['cateArr'] = $cateArr;
 $context['dataArr'] = $dataArr;
 $context['sesArr'] = $sesArr;
 $context['reviewArr'] = $reviewArr;
 $template = $twig->loadTemplate('list.html.twig');
 $template->display($context);
+
+
 

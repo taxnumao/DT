@@ -21,7 +21,7 @@ class Item {
         return $res;
     }
 
-    // 商品リストを取得する
+    // 商品リストを取得
     public function getItemList($ctg_id) {
         // カテゴリーによって表示させるアイテムを変える
         $table = ' item ';
@@ -34,10 +34,10 @@ class Item {
         return ($res !== false && count($res) !== 0) ? $res : false;
     }
 
-    //  商品の詳細情報を取得する
+    //  商品の詳細情報を取得
     public function getItemDetailData($item_id) {
-        $table = ' item ';
-        $col = ' item_id, item_name, detail, price, image, ctg_id ';
+        $table = 'item';
+        $col = 'item_id, item_name, detail, price, image, ctg_id';
         
         $where = ($item_id !== '') ? ' item_id = ? ' : '';
         // カテゴリーによって表示させるアイテムを変える
@@ -46,5 +46,17 @@ class Item {
         $res = $this->db->select($table, $col, $where, $arrVal);
 
         return ($res !== false && count($res) !== 0) ? $res : false;
+    }
+
+    // 検索窓の商品を取得
+    public function getItemSearch($text) {
+         $table = 'item';
+         $col = 'item_id, item_name, price, image, ctg_id, detail';
+         $where = 'item_name LIKE ? OR detail LIKE ?';
+         $arrVal = ["%" . $text . "%", "%" . $text . "%"];
+ 
+         $res = $this->db->select($table, $col, $where, $arrVal);
+ 
+         return ($res !== false && count($res) !== 0) ? $res : false;
     }
 }

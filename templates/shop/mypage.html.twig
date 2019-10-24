@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <title>マイページ</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <div class="wrapper">
+        <h3>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さんのマイページ {% endif %}</h3>
+        <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cus_edit.php">登録情報編集</a>
+        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php" > カート</a>
+        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php" > 商品</a>
+        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">ログアウト</a>
+        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">お問い合わせ</a>
+        /<a href="">ヘルプ</a> {#ヘルプから退会 #}
+            <div>
+                お届け先住所　[登録の住所]
+            </div>
+            <div>
+                [過去のご購入履歴] <br>
+                {% if saleArr | length == 0 %}
+                <p>商品購入履歴がありません</p>
+                {% else %}
+                <div class="sale">
+                    <table border="1" width="80%">
+                        <tr>
+                            <th>購入日時</th><th>商品</th><th>値段</th><th>個数</th>
+                        </tr>
+                        {% for value in saleArr %}
+                        <tr>
+                            <td>{{value.sale_date}}</td>
+                            <td >{{value.item_name}}</td>
+                            <td>&yen;{{value.price|number_format(0, '.', ',')}}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <footer>
+        </footer>
+    </body>
+</html>

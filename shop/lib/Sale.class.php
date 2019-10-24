@@ -18,7 +18,7 @@ class Sale
     // 売上情報を取得
     public function getSaleData($customer_id)
     {
-        $table = ' sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no ';
+        $table = ' sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no LEFT JOIN item i ON i.item_id = d.item_id';
         $where = ' s.customer_id = ? ';
         $arrVal = [$customer_id];
 

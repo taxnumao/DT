@@ -47,9 +47,6 @@ $cateArr = $itm->getCategoryList();
 // 商品リストを取得
 $dataArr = $itm->getItemList($ctg_id);
 
-// 口コミを取得
-$reviewArr = $rev->getReviewData();
-
 // 検索窓
 if (isset($_GET['text']) === true) {
     $dataArr = $itm->getItemSearch($text);
@@ -58,6 +55,9 @@ if (isset($_GET['text']) === true) {
         $dataArr = $itm->getItemList($ctg_id);
     }
 }
+
+// 口コミを取得
+$reviewArr = $rev->getReviewData();
 
 $context = [];
 $context['cateArr'] = $cateArr;

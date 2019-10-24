@@ -65,17 +65,17 @@ if (isset($_POST['decision'])) {
         // 口コミ用
         $_SESSION['sale'] = 'ok';
 
-        // mailの送信
-        $name = $customerArr[0]['family_name'];
-        $header = $customerArr[0]['email'];
-        $email = "tanukiti@yahoo.co.jp";
+        // // mailの送信
+        // $name = $customerArr[0]['family_name'];
+        // $header = $customerArr[0]['email'];
+        // $email = "tanukiti@yahoo.co.jp";
 
-        $mail = new Mail();
-        $mail->sendMail($email, $header, $sumPrice, $name, $dataArr);
+        // $mail = new Mail();
+        // $mail->sendMail($email, $header, $sumPrice, $name, $dataArr);
 
-        $header = "tanukiti@yahoo.co.jp";
-        $email = $customerArr['email'];
-        $mail->receiveMail($email, $header, $sumPrice, $name, $dataArr);
+        // $header = "tanukiti@yahoo.co.jp";
+        // $email = $customerArr['email'];
+        // $mail->receiveMail($email, $header, $sumPrice, $name, $dataArr);
 
         // 登録マル 完了画面へ
         header('Location:' . Bootstrap::ENTRY_URL . 'sale_complete.php');

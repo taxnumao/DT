@@ -28,6 +28,7 @@ if (!isset($_SESSION['login_id'])) {
 
 $customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 $_SESSION = array();
 if (isset($_COOKIE[session_name()]) === true) {
@@ -38,5 +39,6 @@ session_destroy();
 
 
 $context = [];
+$context['sesArr'] = $sesArr; 
 $template = $twig->loadTemplate('logout.html.twig');
 $template->display($context);

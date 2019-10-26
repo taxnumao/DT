@@ -33,6 +33,7 @@ if (!isset($_SESSION['login_id'])) {
 // sessionチェック
 $customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
+$sesArr['login_id'] = $_SESSION['login_id'];
 
  
 // 顧客データを設定
@@ -59,8 +60,9 @@ $context['dayArr'] = $dayArr;
 $context['sexArr'] = $sexArr;
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
+$context['sesArr'] = $sesArr;
 
 $template = $twig->loadTemplate('cus_edit.html.twig');
 $template->display($context);
 
-var_dump($dataArr);
+

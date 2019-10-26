@@ -39,7 +39,6 @@ $sesArr['login_id'] = $_SESSION['login_id'];
 
 // 売上取得
 $saleArr = $sale->getSaleData($customer_id);
-var_dump($saleArr);
 
 $context = [];
 $context['sesArr'] = $sesArr;

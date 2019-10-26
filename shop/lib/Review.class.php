@@ -36,6 +36,7 @@ class Review
         $this->db->setOrder($strOrder);
 
         $res = $this->db->select($table);
+        $strOrder = '';
 
         return $res;
     }

@@ -14,17 +14,18 @@ use shop\lib\Session;
 use shop\lib\Cart;
 use shop\lib\Customer;
 use shop\lib\Mail;
+use shop\lib\Sale;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
 $cart = new Cart($db);
+$sale = new Sale($db);
 
 // 未ログイン排除
 if (!isset($_SESSION['login_id'])) {
     header('Location:' . Bootstrap::ENTRY_URL . 'login.php');
     exit();
 }
-
 
 
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
@@ -34,7 +35,7 @@ $twig = new \Twig_Environment($loader, [
 
 $customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
-
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 // カート情報の取得
 $dataArr = $cart->getCartData($customer_id);
@@ -54,7 +55,7 @@ list($sumNum, $sumPrice) = $cart->getItemAndSumPrice($customer_id);
 if (isset($_POST['decision'])) {
 
     // sale , sale_detailを登録する
-    $res = $db->orderItem($customer_id, $dataArr);  
+    $res = $sale->orderItem($customer_id, $dataArr);  
 
     if ($res) {
 
@@ -94,10 +95,9 @@ $context = [];
 $context['sumNum'] = $sumNum;
 $context['sumPrice'] = $sumPrice;
 $context['dataArr'] = $dataArr;
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('sale.html.twig');
 $template->display($context);
-
-// var_dump($res);
 
 
 

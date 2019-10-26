@@ -1,47 +1,92 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
         <title>マイページ</title>
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
-        <header>
-        </header>
-        <div class="wrapper">
-        <h3>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さんのマイページ {% endif %}</h3>
-        <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cus_edit.php">登録情報編集</a>
-        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php" > カート</a>
-        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php" > 商品</a>
-        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">ログアウト</a>
-        /<a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">お問い合わせ</a>
-        /<a href="">ヘルプ</a> {#ヘルプから退会 #}
-            <div>
-                お届け先住所　[登録の住所]
-            </div>
-            <div>
-                [過去のご購入履歴] <br>
-                {% if saleArr | length == 0 %}
-                <p>商品購入履歴がありません</p>
-                {% else %}
-                <div class="sale">
-                    <table border="1" width="80%">
-                        <tr>
-                            <th>購入日時</th><th>商品</th><th>値段</th><th>個数</th>
-                        </tr>
-                        {% for value in saleArr %}
-                        <tr>
-                            <td>{{value.sale_date}}</td>
-                            <td >{{value.item_name}}</td>
-                            <td>&yen;{{value.price|number_format(0, '.', ',')}}</td>
-                            <td>{{value.num}}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                {% endif %}
-                </div>
+        <div class="box1">
+            <div class="site">
+                <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
+                <p>{{sesArr.login_id}} さんのマイページ</p>
             </div>
         </div>
-        <footer>
-        </footer>
+
+        <div class="box2">
+            <nav class="menu">
+                <ul>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cus_edit.php">EDIT <i class="far fa-edit"></i></a></li>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="boxA">
+            <div class="box3">
+                <article class="item">
+                    <section>
+                        <div>
+                            お届け先住所　[登録の住所]<br>
+                        </div>
+                        <div>
+                            会員ランク  
+                        </div>
+                        <div>
+                            [過去のご購入履歴] <br>
+                            {% if saleArr | length == 0 %}
+                            <p>商品購入履歴がありません</p>
+                            {% else %}
+                            <div class="sale">
+                                <table border="1" width="60%">
+                                    <tr>
+                                        <th>購入日時</th><th>商品</th><th>値段</th><th>個数</th><th>小計</th>
+                                    </tr>
+                                    {% for value in saleArr %}
+                                    <tr>
+                                        <td>{{value.sale_date}}</td>
+                                        <td >{{value.item_name}}</td>
+                                        <td>&yen;{{value.price|number_format(0, '.', ',')}}</td>
+                                        <td>{{value.num}}</td>
+                                        <td>&yen;{{(value.num * value.price)|number_format(0, '.', ',')}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </article>
+            </div>
+            <div class="box4">
+                <aside class="kuchi" >
+                    <h1>口コミ <i class="far fa-thumbs-up"></i></h1>
+                        {% for value in reviewArr %}
+                        <p>{{value.nickname}}さん &nbsp; {{value.regist_date}}<br>
+                        点数:{{value.score}}点 &nbsp; {% if value.entry == '1' %}商品について{% elseif value.entry == '2'  %}配送について{% elseif value.entry == '3'  %}その他{% endif  %}<br>
+                        内容: {{value.contents}}<br>
+                        </p>
+                        {% endfor %} 
+                </aside>
+
+                <aside class="ninki" >
+                    <h1>人気商品 <i class="fas fa-crown"></i></h1>
+                </aside>
+            </div>
+        </div>
+
+        <div class="box5">
+            <div class="copyright">
+                <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
+                <p>Copyright &copy; KINU NAVI</p>
+            </div>
+        </div>
     </body>
 </html>

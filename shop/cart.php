@@ -33,6 +33,8 @@ $twig = new \Twig_Environment($loader, [
 $customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
 $customer_no = $_SESSION['customer_no'];   //sessionCheck();でセットしてる
+$sesArr['login_id'] = $_SESSION['login_id'];
+
 
 // item_idを取得する
 $item_id = (isset($_GET['item_id']) === true && preg_match('/^\d+$/', $_GET['item_id']) === 1) ? $_GET['item_id'] : ''; //登録用
@@ -99,5 +101,6 @@ $context['numArr'] = $numArr;
 $context['sumNum'] = $sumNum;
 $context['sumPrice'] = $sumPrice;
 $context['dataArr'] = $dataArr;
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('cart.html.twig');
 $template->display($context);

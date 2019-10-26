@@ -30,6 +30,9 @@ if (isset($customer_no) === '') {
 
 $customer_id = $_SESSION['customer_id'];
 $ses->checkSession($customer_id);
+$sesArr['login_id'] = $_SESSION['login_id'];
 
+$context = [];
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('cus_complete.html.twig');
-$template->display([]);
+$template->display($context);

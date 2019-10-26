@@ -38,28 +38,27 @@ $customer_no = $_SESSION['customer_no'];
 
 $sesArr['login_id'] = $_SESSION['login_id'];
 
-$ctg_id = (isset($_GET['ctg_id']) === true && preg_match('/^[0-9]+$/', $_GET['ctg_id']) === 1) ? $_GET['ctg_id'] : '';
-$text = (isset($_GET['text']) === true) ? $_GET['text'] : '';
-
 // カテゴリーリスト(一覧)を取得
+$ctg_id = (isset($_GET['ctg_id']) === true && preg_match('/^[0-9]+$/', $_GET['ctg_id']) === 1) ? $_GET['ctg_id'] : '';
 $cateArr = $itm->getCategoryList();
 
-// 商品リストを取得
-$dataArr = $itm->getItemList($ctg_id);
-
 // 検索窓
-if (isset($_GET['text']) === true) {
+$text = (isset($_GET['text']) === true) ? $_GET['text'] : '';
+if ($text) {
     $dataArr = $itm->getItemSearch($text);
     if (!$dataArr) {
-        echo '一致する検索結果はありません';
+        // $msg = 'false';
         $dataArr = $itm->getItemList($ctg_id);
     }
+} else {
+    $dataArr = $itm->getItemList($ctg_id);
 }
 
 // 口コミを取得
 $reviewArr = $rev->getReviewData();
 
 $context = [];
+// $context['msg'] = $msg;
 $context['cateArr'] = $cateArr;
 $context['dataArr'] = $dataArr;
 $context['sesArr'] = $sesArr;

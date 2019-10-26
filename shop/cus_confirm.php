@@ -31,6 +31,7 @@ if (!isset($_SESSION['login_id'])) {
 
 $customer_id = $_SESSION['customer_id'];
 $ses->checksession($customer_id);
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 
 // モード判定(どの画面から来たか判断)
@@ -121,15 +122,16 @@ $context['sexArr'] = $sexArr;
 
 list($yearArr, $monthArr, $dayArr) = initMaster::getDate();
 
+$context = [];
 $context['yearArr'] = $yearArr;
 $context['monthArr'] = $monthArr;
 $context['dayArr'] = $dayArr;
-
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate($template);
 $template->display($context);
 
 
-var_dump($dataArr);
+
 

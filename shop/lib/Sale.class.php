@@ -15,6 +15,44 @@ class Sale
         $this->db = $db;
     }
 
+    public function orderItem($customer_id, $dataArr) 
+    {
+        // 初期化
+        $res = [];
+
+        // saleの登録
+        $table = 'sale';
+        $insData = ['customer_id' => $customer_id, 'sale_date' => date("Y/m/d H:i:s")];
+        $res[] = $this->db->insert($table, $insData);
+
+        // sale_detailの登録
+        $sale_no = $this->db->getLastId();
+        $table = 'sale_detail';
+        for ($i = 0; $i < count($dataArr); $i ++) {
+            $insData = ['sale_no' => $sale_no, 'item_id' => $dataArr[$i]['item_id'], 'price' => $dataArr[$i]['price'], 'num' => $dataArr[$i]['num']];
+            $res[] = $this->db->insert($table, $insData);
+        }
+
+        // カートのリセット
+        $res[] = $this->orderItemReset($dataArr);
+
+        return $res;
+    }
+
+    public function orderItemReset($dataArr)
+    {
+        $table = 'cart';
+        $insData = ['delete_flg' => 1];
+        $where = 'crt_id = ?';
+
+        for ($i = 0; $i < count($dataArr); $i ++) {
+            $arrWhereVal = [$dataArr[$i]['crt_id']];
+            $res = $this->db->update($table, $insData, $where, $arrWhereVal);
+        }
+        return $res;
+    }
+
+
     // 売上情報を取得
     public function getSaleData($customer_id)
     {

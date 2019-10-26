@@ -13,6 +13,7 @@ class Staff {
         $this->db = $db;
     }
 
+    // スタッフ登録
     public function registStaff($dataArr) {
 
         unset($dataArr['complete']);
@@ -31,5 +32,15 @@ class Staff {
 
     }
 
+    // スタッフ情報取得(一覧用)
+    public function getStaff() {
+
+        $table = 'staff';
+        $where = 'delete_flg = ?';
+        $arrVal = [0];
+        
+        return $this->db->select($table, $column = '', $where, $arrVal);
+
+    }
 
 }

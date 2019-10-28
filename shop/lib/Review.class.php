@@ -19,6 +19,7 @@ class Review
     // 口コミ登録
     public function insReviewData($insData, $customer_id)
     {
+        unset($insData['complete']);
 
         $insData['customer_id'] = $customer_id;
         $insData['regist_date'] = date("Y/m/d H:i:s");

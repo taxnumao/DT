@@ -33,12 +33,12 @@ if (!isset($_SESSION['login_id'])) {
  ]);
 
 // sessionチェック
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
 
 $dataArr['login_id'] = $_SESSION['login_id'];
 
 // 退会処理
+$customer_id = $_SESSION['customer_id'];
 if (isset($_POST['yes'])) {
     
     $res = $cus->deleteCustomer($customer_id);

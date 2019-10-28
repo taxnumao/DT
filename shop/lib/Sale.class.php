@@ -15,14 +15,14 @@ class Sale
         $this->db = $db;
     }
 
-    public function orderItem($customer_id, $dataArr) 
+    public function orderItem($customer_no, $dataArr) 
     {
         // 初期化
         $res = [];
 
         // saleの登録
         $table = 'sale';
-        $insData = ['customer_id' => $customer_id, 'sale_date' => date("Y/m/d H:i:s")];
+        $insData = ['customer_no' => $customer_no, 'sale_date' => date("Y/m/d H:i:s")];
         $res[] = $this->db->insert($table, $insData);
 
         // sale_detailの登録
@@ -54,11 +54,11 @@ class Sale
 
 
     // 売上情報を取得
-    public function getSaleData($customer_id)
+    public function getSaleData($customer_no)
     {
         $table = ' sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no LEFT JOIN item i ON i.item_id = d.item_id';
-        $where = ' s.customer_id = ? ';
-        $arrVal = [$customer_id];
+        $where = ' s.customer_no = ? ';
+        $arrVal = [$customer_no];
 
         return $this->db->select($table, $column = '', $where, $arrVal);
     }

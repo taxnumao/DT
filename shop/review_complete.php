@@ -22,13 +22,11 @@ $twig = new \Twig_Environment($loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
 
-if (isset($customer_id) === '') {
-    header('location:'. Bootstrap::ENTRY_URL . 'list_guest.php');
-    exit(); 
-}
+$ses->checkSession();
+$sesArr['login_id'] = $_SESSION['login_id'];
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
 
+$context = [];
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('review_complete.html.twig');
-$template->display([]);
+$template->display($context);

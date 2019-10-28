@@ -28,8 +28,8 @@ if (isset($customer_no) === '') {
     exit(); 
 }
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+
+$ses->checkSession();
 $sesArr['login_id'] = $_SESSION['login_id'];
 
 $context = [];

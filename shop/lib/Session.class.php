@@ -20,7 +20,7 @@ class Session
         $this->db = $db;
     }
 
-    public function checkSession($customer_id)
+    public function checkSession()
     {
         // セッションIDのチェック
         $customer_no = $this->selectSession();
@@ -29,7 +29,7 @@ class Session
             $_SESSION['customer_no'] = $customer_no;
         } else {
             // セッションIDがない(初めてこのサイトに来ている)
-            $res = $this->insertSession($customer_id);
+            $res = $this->insertSession();
             if ($res === true) {
                 $_SESSION['customer_no'] = $this->db->getLastId();
             } else {
@@ -49,10 +49,10 @@ class Session
         return (count($res) !== 0) ? $res[0]['customer_no'] : false;
     }
 
-    private function insertSession($customer_id)
+    private function insertSession()
     {
         $table = ' session ';
-        $insData = ['session_key ' => $this->session_key, 'customer_id' => $customer_id];
+        $insData = ['session_key ' => $this->session_key];
         $res = $this->db->insert($table, $insData);
         return $res;
     }

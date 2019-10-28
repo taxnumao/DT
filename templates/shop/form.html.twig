@@ -12,25 +12,33 @@
         <div class="box1">
             <div class="site">
                 <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
-                <p>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さん、こんにちわ！{% else %}ゲストさん、こんにちは！ {% endif %}</p>
+                <p>
+                    {% if sesArr.login_id | length > 0 %} 
+                        {{sesArr.login_id}}さん、こんにちは<i class="far fa-laugh"></i>
+                    {% else %}
+                        ゲストさん、こんにちは<i class="far fa-laugh"></i> 
+                    {% endif %}
+                </p>
             </div>
         </div>
 
         <div class="box2">
-            <nav class="menu">
-                <ul>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
-                    {% if sesArr.login_id | length > 0 %}
-                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li> 
-                    {% else %}
-                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
-                    {% endif %}
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
-                    {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
-                </ul>
-            </nav>
+            <div class="box2_inner">
+                <nav class="menu">
+                    <ul>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li> 
+                        {% else %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                        {% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <div class="boxA">
@@ -105,9 +113,11 @@
         </div>
 
         <div class="box5">
-            <div class="copyright">
-                <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
-                <p>Copyright &copy; KINU NAVI</p>
+            <div class="box5_inner">
+                <div class="copyright">
+                    <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
+                    <p>Copyright &copy; KINU NAVI</p>
+                </div>
             </div>
         </div>
     </body>

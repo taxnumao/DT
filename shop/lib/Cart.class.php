@@ -16,12 +16,13 @@ class Cart
     }
 
     // カートに登録する(必要な情報は、誰が$customer_no、何を($item_id))
-    public function insCartData($customer_no, $item_id)
+    public function insCartData($customer_no, $item_id, $customer_id)
     {
-        $table = ' cart ';
+        $table = 'cart';
         $insData = [
             'customer_no' => $customer_no,
-            'item_id' => $item_id
+            'item_id' => $item_id,
+            'customer_id' => $customer_id
         ];
         return $this->db->insert($table, $insData);
     }
@@ -29,9 +30,9 @@ class Cart
     // カートの情報を取得する(必要な情報は、誰が$customer_id。必要な商品情報は名前、商品画像、金額)
     public function getCartData($customer_id)
     {
-        $table = ' cart c LEFT JOIN item i ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ';
-        $column = ' s.customer_id, c.crt_id, c.num, i.item_id, i.item_name, i.price, i.image';
-        $where = ' s.customer_id = ? AND c.delete_flg = ? ';
+        $table = 'cart c LEFT JOIN item i ON c.item_id = i.item_id';
+        $column = 'c.customer_id, c.crt_id, c.num, i.item_id, i.item_name, i.price, i.image';
+        $where = 'c.customer_id = ? AND c.delete_flg = ? ';
         $arrVal = [$customer_id, 0];
 
         return $this->db->select($table, $column, $where, $arrVal);
@@ -52,16 +53,16 @@ class Cart
     public function getItemAndSumPrice($customer_id)
     {
         // 合計金額
-        $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ";
+        $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id ";
         $column = " SUM( i.price*c.num ) AS totalPrice ";
-        $where = ' s.customer_id  = ? AND c.delete_flg = ?';
+        $where = ' c.customer_id  = ? AND c.delete_flg = ?';
         $arrWhereVal = [$customer_id, 0];
 
         $res = $this->db->select($table, $column, $where, $arrWhereVal);
         $price = ($res !== false && count($res) !== 0) ? $res[0]['totalPrice'] : 0;
 
         // アイテム数
-        $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id LEFT JOIN session s ON c.customer_no = s.customer_no ";
+        $table = " cart c  LEFT JOIN item i  ON c.item_id = i.item_id ";
         $column = ' SUM( num ) AS num ';
         $res = $this->db->select($table, $column, $where, $arrWhereVal);
 

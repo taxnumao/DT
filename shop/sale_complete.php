@@ -27,11 +27,12 @@ $twig = new \Twig_Environment($loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 
 $context = [];
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('sale_complete.html.twig');
 $template->display($context);
 

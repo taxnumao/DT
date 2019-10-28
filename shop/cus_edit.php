@@ -31,9 +31,9 @@ if (!isset($_SESSION['login_id'])) {
  ]);
 
 // sessionチェック
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
 $sesArr['login_id'] = $_SESSION['login_id'];
+$customer_id = $_SESSION['customer_id'];
 
  
 // 顧客データを設定
@@ -46,11 +46,7 @@ foreach ($dataArr as $key => $value) {
     $errArr[$key] = '';
 }
 
-// array($yearArr, $monthArr, $dayArr)
-// 静的クラス
-
 list($yearArr,$monthArr,$dayArr) = initMaster::getDate();
-// list : 右辺の配列の要素を、左辺の変数に代入することができる
 $sexArr = initMaster::getSex();
 
 $context = [];

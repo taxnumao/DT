@@ -32,8 +32,7 @@ $twig = new \Twig_Environment($loader, [
 
 
 // セッションに、セッションIDを設定する
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
 
 // item_idを取得する
 $item_id = (isset($_GET['item_id']) === true && preg_match('/^\d+$/', $_GET['item_id']) === 1) ? $_GET['item_id'] : '';
@@ -58,11 +57,3 @@ $context['sesArr'] = $sesArr;
 $context['itemData'] = $itemData[0];// なぜ0が必要かは、$itemDataをvar_dumpして見よう！
 $template = $twig->loadTemplate('detail.html.twig');
 $template->display($context);
-
-// var_dump($itemData);
-// array(1) { [0]=> array(6) { ["item_id"]=> string(1) "1" 
-//                             ["item_name"]=> string(12) "たまねぎ" 
-//                             ["detail"]=> string(183) "染色体数は2n=16。生育適温は20℃前後で、寒さには強く氷点下でも凍害はほとんど見られないが、25℃以上の高温では生育障害が起こる。" 
-//                             ["price"]=> string(7) "100.000" 
-//                             ["image"]=> string(12) "tamanegi.jpg" 
-//                             ["ctg_id"]=> string(1) "1" } }

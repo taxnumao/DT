@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>マイページ</title>
+        <title>MYPAGE</title>
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -17,16 +17,18 @@
         </div>
 
         <div class="box2">
-            <nav class="menu">
-                <ul>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cus_edit.php">EDIT <i class="far fa-edit"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
-                </ul>
-            </nav>
+            <div class="box2_inner">
+                <nav class="menu">
+                    <ul>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cus_edit.php">EDIT <i class="far fa-edit"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <div class="boxA">
@@ -83,9 +85,11 @@
         </div>
 
         <div class="box5">
-            <div class="copyright">
-                <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
-                <p>Copyright &copy; KINU NAVI</p>
+            <div class="box5_inner">
+                <div class="copyright">
+                    <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
+                    <p>Copyright &copy; KINU NAVI</p>
+                </div>
             </div>
         </div>
     </body>

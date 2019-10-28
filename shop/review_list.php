@@ -23,12 +23,13 @@ $twig = new \Twig_Environment($loader, [
 ]);
 
 // セッションに、セッションIDを設定する
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 $dataArr = $rev->getReviewData();
 
 $context = [];
+$context['sesArr'] = $sesArr; 
 $context['dataArr'] = $dataArr;
 $template = $twig->loadTemplate('review_list.html.twig');
 $template->display($context);

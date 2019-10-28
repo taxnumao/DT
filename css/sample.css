@@ -1,0 +1,215 @@
+@charset "UTF-8";
+
+body {
+    margin: 0;
+    font-family: 'メイリオ', 'Hiragino Kaku Gothic Pro', sans-serif;
+}
+
+.box1, .boxA, .box2_inner, .box5_inner, .box6 {
+    padding-right: 10px;
+    margin-left: 10px;
+}
+
+li {
+    list-style-type : none;
+}
+
+li.name a, li.detail a {
+    text-decoration: none;
+    color: black;
+}
+
+li.name a:hover, li.detail a:hover {
+    font-weight: bold;
+    border-bottom: solid 1px rgb(207, 35, 35);
+}
+li.price {
+    color: rgb(143, 6, 6);
+}
+
+.red {
+    color : #f00;
+    font-size : 12px;
+}
+
+
+/* サイト名 */
+.site h1 a {
+    color: rgb(53, 50, 50);
+    text-decoration: none;
+}
+
+.site h1 {
+    margin: 0;
+    font-size: 30px;
+    font-family: 'Paytone One', sans-serif;
+    font-weight: normal;
+}
+
+.site p {
+    font-size: 12px;
+    float: center;
+    width: 150px;
+    height: 20px;
+}
+
+/* ナビゲーション */
+.menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu ul a {
+    display: block;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu li a:hover {
+    background: #5a5959;
+}
+
+.menu ul:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.menu li {
+    float: left;
+    width: auto;
+}
+
+/* 口コミ */
+
+.kuchi h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: dotted 2px #dddddd;
+    color: #dddddd;
+    font-size: 18px;
+}
+
+/* 人気商品 */
+.ninki h1 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: dotted 2px #dddddd;
+    color: #dddddd;
+    font-size: 18px;
+}
+
+/* コピーライト */
+.copyright p {
+    margin: 0;
+    color: white;
+    font-size: 14px;
+}
+
+/* バーの色つけ */
+.box1 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.box2 {
+    background-color: black;
+    opacity: 0.8;
+}
+
+.box3 {
+    padding-top: 40px ;
+    padding-bottom: 30px;
+}
+
+.box4 {
+    padding-top: 40px ;
+    padding-bottom: 30px;
+}
+
+.box5 {
+    background-color: rgb(53, 50, 50); 
+    padding-top: 10px ;
+    padding-bottom: 10px;
+}
+.box6 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* rgb(138, 207, 138) */
+
+div#category a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5em 1em;
+    color: #020303;
+    border: dashed 1px #98d3f8;
+    background: #f2fcff;
+    border-radius: 3px;
+    transition: .4s;
+}
+/* #98d3f8 */
+
+div#category a:hover {
+    background: #cbedff;
+    color: #FFF;
+}
+img {
+    width: 200px;
+    height: 200px;
+}
+
+img:hover {
+    opacity: 0.8;
+}
+
+.item_left {
+    float: left;
+    width: 50%;
+}
+
+.item_right {
+    float: left;
+    width: 50%;
+}
+
+
+@media (min-width: 768px) {
+
+.boxA:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+    
+.box3 {
+    float: left;
+    width: 70%;
+    padding-right: 50px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.box4 {
+    float: left;
+    width: 30%;
+}
+}
+
+@media (min-width: 1040px) {
+    .box1, .box2_inner, .boxA, .box5_inner, .box6 {
+        width: 1050px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+

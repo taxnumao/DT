@@ -31,14 +31,14 @@ $twig = new \Twig_Environment($loader, [
 
 
 // SessionKeyを見て、DBへの登録状態をチェックする
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
  
 
 $sesArr['login_id'] = $_SESSION['login_id'];
 
 // 売上取得
-$saleArr = $sale->getSaleData($customer_id);
+$customer_no = $_SESSION['customer_no'];
+$saleArr = $sale->getSaleData($customer_no);
 
 $context = [];
 $context['sesArr'] = $sesArr;

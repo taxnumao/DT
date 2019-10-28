@@ -12,67 +12,117 @@
         <div class="box1">
             <div class="site">
                 <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
-                <p>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さん、こんにちわ！ {% endif %}</p>
+                <p>{% if sesArr.login_id | length > 0 %} 
+                        {{sesArr.login_id}}さん、こんにちは <i class="far fa-laugh"></i>
+                   {% else %} 
+                        ゲストさん、こんにちは <i class="far fa-laugh"></i>
+                   {% endif %}
+                </p>
             </div>
         </div>
 
+        {# <div class="box6">
+            <div class="slider">
+                <div><imag src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/ras.jpg"></div>
+                <div><imag src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/ichigos.jpg"></div>
+                <div><imag src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/hachiya.jpg"></div>
+                <div><imag src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/seiryu.jpeg"></div>
+                <div><imag src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/masashi.jpg"></div>
+            </div>
+        </div> #}
+
         <div class="box2">
-            <nav class="menu">
-                <ul>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
-                    {% if sesArr.login_id | length == 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>{% endif %}
-                    {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>{% endif %}
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
-                    {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
-                    <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
-                </ul>
-            </nav>
+            <div class="box2_inner">
+                <nav class="menu">
+                    <ul>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
+                        {% if sesArr.login_id | length == 0 %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                        {% else %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
+                        {% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
+                    </ul>
+                </nav> 
+            </div>
         </div>
 
         <div class="boxA">
             <div class="box3">
                 <article class="item">
-                    <section>
-                        <h1>お土産一覧</h1>
-                            地域 {% include 'category_menu.html.twig' %}
-                        <div class="sarea">
-                            <form method="get" action="">
-                                <input type="text" name="text" placeholder="商品名/キーワード">
-                                <input type="submit" name="search" value="検索" >
-                            </form>
+                    <h1>お土産一覧</h1>
+                    <div id="category">
+                        カテゴリー(地域)&nbsp;
+                        <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">全て</a>
+                        {% for value in cateArr %}
+                        <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php?ctg_id={{value.ctg_id}}">{{value.category_name}}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="sarea">
+                        <form method="get" action="">
+                            <input type="text" name="text" placeholder="商品名/キーワード">
+                            <input type="submit" name="search" value="検索" >
+                        </form>
+                    </div>
+                    <div id="item_list">
+                        <div class="item_left">
+                            {% for value in dataArrOdd %}
+                            <ul>
+                                <li class="name">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">{{value.item_name}}</a>
+                                </li>
+                                <li class="image">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
+                                    <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
+                                    </a>
+                                </li>
+                                <li class="detail">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">詳細</a>
+                                </li>
+                                <li class="price">
+                                    &yen;{{value.price|number_format(0, '.', ',')}}
+                                </li>
+                                <li class="cart">
+                                    <input type="hidden" name="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}" id="entry_url" >
+                                    <input type="hidden" name="item_id" id="item_id" value="{{value.item_id}}">
+                                    <input type="button" name="cart_in" value="ショッピングカートへ入れる" id="cart_in" >
+                                </li>
+                            </ul>
+                            {% endfor %}
                         </div>
-                        <div id="item_list">
-                            {% for value in dataArr %}
-                                <div class="item">
-                                    <ul>
-                                        <li class="name">
-                                            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">{{value.item_name}}</a>
-                                        </li>
-                                        <li class="price">
-                                            &yen;{{value.price|number_format(0, '.', ',')}}
-                                        </li>
-                                        <li class="image">
-                                            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
-                                            <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
-                                            </a>
-                                        </li>
-                                        <li class="detail">
-                                            <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">詳細</a>
-                                        </li>
-                                        <li class="cart">
-                                            <input type="hidden" name="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}" id="entry_url" >
-                                            <input type="hidden" name="item_id" id="item_id" value="{{value.item_id}}">
-                                            <input type="hidden" name="msg" id="msg" value="{{msg}}">
-                                            <input type="button" name="cart_in" value="ショッピングカートへ入れる" id="cart_in" >
-                                        </li>
-                                    </ul>
-                                </div>
-                            {% endfor %}  
-                        </div>
-                    </section>
+                        <div class="item_right">
+                            {% for value in dataArrEven %}
+                            <ul>
+                                <li class="name">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">{{value.item_name}}</a>
+                                </li>
+                                <li class="image">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
+                                    <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
+                                    </a>
+                                </li>
+                                <li class="detail">
+                                    <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">詳細</a>
+                                </li>
+                                <li class="price">
+                                    &yen;{{value.price|number_format(0, '.', ',')}}
+                                </li>
+                                <li class="cart">
+                                    <input type="hidden" name="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}" id="entry_url" >
+                                    <input type="hidden" name="item_id" id="item_id" value="{{value.item_id}}">
+                                    <input type="button" name="cart_in" value="ショッピングカートへ入れる" id="cart_in" >
+                                </li>
+                            </ul>
+                        {% endfor %}  
+                        </div>  
+                    </div>
                 </article>
             </div>
+            
             <div class="box4">
                 <aside class="kuchi" >
                     <h1>口コミ <i class="far fa-thumbs-up"></i></h1>
@@ -91,9 +141,11 @@
         </div>
 
         <div class="box5">
-            <div class="copyright">
-                <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
-                <p>Copyright &copy; KINU NAVI</p>
+            <div class="box5_inner">
+                <div class="copyright">
+                    <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
+                    <p>Copyright &copy; KINU NAVI</p>
+                </div>
             </div>
         </div>
     </body>

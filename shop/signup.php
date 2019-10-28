@@ -1,8 +1,8 @@
 <?php
 /*
- * ファイルパス : \Application\xampp\htdocs\DT\shop\regist.php
- * ファイル名 : regist.php
- * アクセスURL : http://localhost/DT/shop/regist.php
+ * ファイルパス : \Application\xampp\htdocs\DT\shop\signup.php
+ * ファイル名 : signup.php
+ * アクセスURL : http://localhost/DT/shop/signup.php
  */
  namespace shop;
 
@@ -10,14 +10,22 @@
 
  use shop\master\initMaster;
  use shop\Bootstrap;
+ use shop\lib\PDODatabase;
+ use shop\lib\Session;
+
+
 
  // テンプレート指定
  $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
  $twig = new \Twig_Environment($loader, [
-    'cache' => Bootstrap::CACHE_DIR,
-    'debug' => true
+    'cache' => Bootstrap::CACHE_DIR
  ]);
- $twig->addExtension(new \Twig\Extension\DebugExtension());
+
+ $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
+ $ses = new Session($db);
+
+ $ses->checkSession();
+ 
 
 // 初期データを設定
 $dataArr = [
@@ -65,5 +73,5 @@ $context['sexArr'] = $sexArr;
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
 
-$template = $twig->loadTemplate('regist.html.twig');
+$template = $twig->loadTemplate('signup.html.twig');
 $template->display($context);

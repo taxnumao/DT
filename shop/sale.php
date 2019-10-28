@@ -33,9 +33,10 @@ $twig = new \Twig_Environment($loader, [
     'cache' => Bootstrap::CACHE_DIR
 ]);
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
 $sesArr['login_id'] = $_SESSION['login_id'];
+$customer_no = $_SESSION['customer_no'];
+$customer_id = $_SESSION['customer_id'];
 
 // カート情報の取得
 $dataArr = $cart->getCartData($customer_id);
@@ -55,7 +56,7 @@ list($sumNum, $sumPrice) = $cart->getItemAndSumPrice($customer_id);
 if (isset($_POST['decision'])) {
 
     // sale , sale_detailを登録する
-    $res = $sale->orderItem($customer_id, $dataArr);  
+    $res = $sale->orderItem($customer_no, $dataArr);  
 
     if ($res) {
 

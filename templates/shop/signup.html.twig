@@ -2,17 +2,19 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>登録編集</title>
+        <title>HOME</title>
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/common.js"></script>
     </head>
     <body>
         <div class="box1">
             <div class="site">
                 <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
-                <p>{{sesArr.login_id}}さんの登録編集ページ</p>
+                <p>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さん、こんにちわ！{% else %} ゲストさん、こんにちわ！ {% endif %}</p>
             </div>
         </div>
 
@@ -21,10 +23,15 @@
                 <nav class="menu">
                     <ul>
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
-                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
+                        {% if sesArr.login_id | length == 0 %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                        {% else %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
+                        {% endif %}
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
-                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
                     </ul>
                 </nav>
@@ -35,17 +42,17 @@
             <div class="box3">
                 <article class="data">
                     <section>
-                        <h1>登録情報編集</h1>
+                        <h1>新規会員登録</h1>
                         <input type="hidden" name="entry_url" id="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}">
-                        <form method="post" action="cus_confirm.php">
+                        <form method="post" action="signup_confirm.php">
                             <table>
                                 <tr>
                                     <th>お名前(氏名)<span class="red">*</span></th>
                                     <td>
                                         <input type="text" name="family_name" value="{{dataArr.family_name}}" />
                                         <input type="text" name="first_name" value="{{dataArr.first_name}}" />
-                                        {% if errArr.family_name | length > 0 %}<br><span class="red">{{ errArr.family_name }}</span>{% endif %}
-                                        {% if errArr.first_name | length > 0 %}<br><span class="red">{{ errArr.first_name }}</span>{% endif %}
+                                        {% if errArr.family_name | length > 0 %}<br><span class="red">{{ errArr. family_name }}</span>{% endif %}
+                                        {% if errArr.first_name | length > 0 %}<br><span class="red">{{ errArr. first_name }}</span>{% endif %}
                                     </td>
                                 </tr>
                                 <tr>
@@ -69,6 +76,7 @@
                                     <th>ログインID<span class="red">*</span></th>
                                     <td>
                                         <input type="text" name="login_id" value="{{dataArr.login_id}}" />
+                                        次回、ログイン時に必要です。
                                         {% if errArr.login_id | length > 0 %}<br><span class="red">{{ errArr.login_id }}</span>{% endif %}
                                     </td>
                                 </tr>
@@ -76,6 +84,7 @@
                                     <th>パスワード<span class="red">*</span></th>
                                     <td>
                                         <input type="password" name="pass1" value="" />
+                                        次回、ログイン時に必要です。
                                         {% if errArr.pass1 | length > 0 %}<br><span class="red">{{ errArr.pass1 }}</span>{% endif %}
                                     </td>
                                 </tr>
@@ -154,7 +163,10 @@
                                     </td>
                                 </tr>
                             </table>
-                            <input type="submit" name="confirm" value="編集内容確認" />
+                            <div>
+                                <input type="button" name="back" value="戻る" onclick="history.back(); return false;">
+                                <input type="submit" name="confirm" value="登録確認" />
+                            </div>
                         </form>
                     </section>
                 </article>
@@ -177,7 +189,7 @@
         </div>
 
         <div class="box5">
-            <div class="box2_inner">
+            <div class="box5_inner">
                 <div class="copyright">
                     <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
                     <p>Copyright &copy; KINU NAVI</p>

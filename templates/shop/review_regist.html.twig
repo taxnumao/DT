@@ -1,56 +1,122 @@
+<!DOCTYPE html>
 <html lang="ja">
     <head>
-        <meta charset="utf-8" />
-        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/shop.css" rel="stylesheet" type="text/css" />
-        <title>口コミ投稿画面</title>
+        <meta charset="utf-8">
+        <title>REVIEW</title>
+        <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
-        <div>
-            <h1>口コミを書く</h1>
-            <form method="post" action="review_confirm.php">
-                <table>
-                    <tr>
-                        <th>ニックネーム<span class="red">*</span></th>
-                        <td>
-                            <input type="text" name="nickname" value="{{dataArr.nickname}}" />
-                            {% if errArr.nickname | length > 0 %}<br><span class="red">{{errArr.nickname}}</span>{% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>評価<span class="red">*</span></th>
-                        <td>
-                           <select name="score" >
-                                {% for index, label in scoreArr %}
-                                <option value="{{index}}" {% if dataArr.score == index %} selected {% endif %}>{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                            {% if errArr.score | length > 0 %}<br><span class ="red">{{errArr.score}}</span>{% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>項目<span class="red">*</span></th>
-                        <td>
-                            <select name="entry" >
-                                {% for index, label in entryArr %}
-                                <option value="{{index}}" {% if dataArr.entry == index %} selected {% endif %}>{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                            {% if errArr.entry | length > 0 %}<br><span class ="red">{{errArr.entry}}</span>{% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>内容</th>
-                        <td>
-                            <textarea name="contents" rows="4" cols="40">{{dataArr.contents}}</textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div>
-                    <input type="button" name="back" value="戻る" onclick="history.back(); return false;">
-                    <input type="submit" name="confirm" value="口コミ内容確認" />
+        <div class="box1">
+            <div class="site">
+                <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
+                <p>{% if sesArr.login_id | length > 0 %} 
+                        {{sesArr.login_id}}さん、こんにちは <i class="far fa-laugh"></i>
+                   {% else %} 
+                        ゲストさん、こんにちは <i class="far fa-laugh"></i>
+                   {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="box2">
+            <div class="box2_inner">
+                <nav class="menu">
+                    <ul>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
+                        {% if sesArr.login_id | length == 0 %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                        {% else %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
+                        {% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
+                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
+                    </ul>
+                </nav> 
+            </div>
+        </div>
+
+        <div class="boxA">
+            <div class="box3">
+                <article class="review">
+                    <h1>口コミを書く</h1>
+                    <section>
+                        <form method="post" action="review_confirm.php">
+                            <table>
+                                <tr>
+                                    <th>ニックネーム<span class="red">*</span></th>
+                                    <td>
+                                        <input type="text" name="nickname" value="{{dataArr.nickname}}" />
+                                        {% if errArr.nickname | length > 0 %}<br><span class="red">{{errArr.nickname}}</span>{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>評価<span class="red">*</span></th>
+                                    <td>
+                                    <select name="score" >
+                                            {% for index, label in scoreArr %}
+                                            <option value="{{index}}" {% if dataArr.score == index %} selected {% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if errArr.score | length > 0 %}<br><span class ="red">{{errArr.score}}</span>{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>項目<span class="red">*</span></th>
+                                    <td>
+                                        <select name="entry" >
+                                            {% for index, label in entryArr %}
+                                            <option value="{{index}}" {% if dataArr.entry == index %} selected {% endif %}>{{ label }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if errArr.entry | length > 0 %}<br><span class ="red">{{errArr.entry}}</span>{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>内容</th>
+                                    <td>
+                                        <textarea name="contents" rows="4" cols="40">{{dataArr.contents}}</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div>
+                                <input type="button" name="back" value="戻る" onclick="history.back(); return false;">
+                                <input type="submit" name="confirm" value="口コミ内容確認" />
+                            </div>
+                        </form>
+                    </section>
+                </article>
+            </div>
+            
+            <div class="box4">
+                <aside class="kuchi" >
+                    <h1>口コミ <i class="far fa-thumbs-up"></i></h1>
+                        {% for value in reviewArr %}
+                        <p>{{value.nickname}}さん &nbsp; {{value.regist_date}}<br>
+                        点数:{{value.score}}点 &nbsp; {% if value.entry == '1' %}商品について{% elseif value.entry == '2'  %}配送について{% elseif value.entry == '3'  %}その他{% endif  %}<br>
+                        内容: {{value.contents}}<br>
+                        </p>
+                        {% endfor %} 
+                </aside>
+
+                <aside class="ninki" >
+                    <h1>人気商品 <i class="fas fa-crown"></i></h1>
+                </aside>
+            </div>
+        </div>
+
+        <div class="box5">
+            <div class="box5_inner">
+                <div class="copyright">
+                    <p>このサイトは栃木県日光市の観光情報サイトです。鬼怒川温泉・今市・日光方面に情報提供します。</p>
+                    <p>Copyright &copy; KINU NAVI</p>
                 </div>
-            </form>
+            </div>
         </div>
     </body>
 </html>

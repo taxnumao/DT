@@ -45,8 +45,8 @@ foreach ($dataArr as $key => $value) {
 }
 
 // セッションに、セッションIDを設定する
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
+$ses->checkSession();
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 $scoreArr = initMaster::getScore();
 $entryArr = initMaster::getEntry();
@@ -56,5 +56,6 @@ $context['scoreArr'] = $scoreArr;
 $context['entryArr'] = $entryArr;
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate('review_regist.html.twig');
 $template->display($context);

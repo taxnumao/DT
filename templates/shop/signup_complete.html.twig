@@ -2,17 +2,19 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>ログアウト画面</title>
+        <title>会員登録完了</title>
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/common.js"></script>
     </head>
     <body>
         <div class="box1">
             <div class="site">
                 <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
-                <p>{{sesArr.login_id}}さんのログアウトページ</p>
+                <p>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さん、こんにちわ！{% else %} ゲストさん、こんにちわ！ {% endif %}</p>
             </div>
         </div>
 
@@ -21,9 +23,15 @@
                 <nav class="menu">
                     <ul>
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
-                        <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}loginphp">LOGIN <i class="far fa-id-card"></i></a></li>
+                        {% if sesArr.login_id | length == 0 %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                        {% else %}
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
+                        {% endif %}
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}review_list.php">REVIEW <i class="far fa-thumbs-up"></i></a></li>
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}cart.php">CART <i class="fas fa-shopping-cart"></i></a></li>
+                        {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
                     </ul>
                 </nav>
@@ -33,9 +41,10 @@
         <div class="boxA">
             <div class="box3">
                 <article class="data">
-                <h1>ログアウト</h1>
                     <section>
-                        <div>ログアウトしました</div>
+                        <h1>登録完了</h1>
+                        <p>登録が完了しました。</p>
+                        <p><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">商品一覧へ</a></p>
                     </section>
                 </article>
             </div>

@@ -1,8 +1,8 @@
 <?php
 /*
- * ファイルパス : \Application\xampp\htdocs\DT\shop\complete.php
- * ファイル名 : complete.php
- * アクセスURL : http://localhost/DT/shop/complete.php
+ * ファイルパス : \Application\xampp\htdocs\DT\shop\signup_complete.php
+ * ファイル名 : signup_complete.php
+ * アクセスURL : http://localhost/DT/shop/signup_complete.php
  */
 namespace shop;
 
@@ -27,8 +27,12 @@ if (isset($customer_no) === '') {
     exit(); 
 }
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
 
-$template = $twig->loadTemplate('complete.html.twig');
-$template->display([]);
+$ses->checkSession();
+$sesArr['login_id'] = $_SESSION['login_id'];
+
+
+$context = [];
+$context['sesArr'] = $sesArr;
+$template = $twig->loadTemplate('signup_complete.html.twig');
+$template->display($context);

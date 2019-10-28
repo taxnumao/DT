@@ -38,8 +38,7 @@ foreach ($dataArr as $key => $value) {
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
 
-$customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : '' ;
-$ses->checkSession($customer_id);
+$ses->checkSession();
 $sesArr['login_id'] = isset($_SESSION['login_id']) ? $_SESSION['login_id'] : '' ;
 
 $sexArr = initMaster::getSex();

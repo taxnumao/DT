@@ -1,8 +1,8 @@
 <?php
 /*
- * ファイルパス : \Application\xampp\htdocs\DT\shop\confirm.php
- * ファイル名 : confirm.php
- * アクセスURL : http://localhost/DT/shop/confirm.php
+ * ファイルパス : \Application\xampp\htdocs\DT\shop\signup_confirm.php
+ * ファイル名 : signup_confirm.php
+ * アクセスURL : http://localhost/DT/shop/signup_confirm.php
  */
 namespace shop;
 
@@ -57,7 +57,7 @@ switch ($mode) {
         // err_check = false →エラーがあります!
         // err_check = true  →エラーがないですよ!
         // エラーがなけらばconfirm.tpl あると regist.tpl
-        $template = ($err_check === true) ? 'confirm.html.twig' : 'regist.html.twig';
+        $template = ($err_check === true) ? 'signup_confirm.html.twig' : 'signup.html.twig';
 
         break;
     case 'back': //戻ってきた時
@@ -71,7 +71,7 @@ switch ($mode) {
             $errArr[$key] = '';
         }
 
-        $template = 'regist.html.twig';
+        $template = 'signup.html.twig';
         break;
     
     case 'complete': // 登録完了
@@ -81,16 +81,16 @@ switch ($mode) {
         
         if ($res === true) {
             $ses = new Session($db);
-            $customer_id = $db->getLastId();
-            $ses->checksession($customer_id);
+            $ses->checksession();
             $_SESSION['login_id'] = $_POST['login_id'];
-            $_SESSION['customer_id'] = $customer_id;
+            $_SESSION['customer_id'] = $db->getLastId();
+            
             // 登録成功時は完成ページへ
-            header('Location:' . Bootstrap::ENTRY_URL . 'complete.php');
+            header('Location:' . Bootstrap::ENTRY_URL . 'signup_complete.php');
             exit();
         } else {
             // 登録失敗時は登録画面に戻る
-            $template = 'regist.html.twig';
+            $template = 'signup.html.twig';
 
             foreach ($dataArr as $key => $value) {
                 $errArr[$key] = '';

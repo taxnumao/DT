@@ -12,6 +12,7 @@ use shop\master\initMaster;
 use shop\lib\PDODatabase;
 use shop\lib\Common;
 use shop\lib\Session;
+use shop\lib\Customer;
 
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
@@ -22,6 +23,7 @@ $twig = new \Twig_Environment($loader, [
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $common = new Common();
 $ses = new Session($db);
+$cus = new Customer($db);
 
 // 未ログイン排除
 if (!isset($_SESSION['login_id'])) {
@@ -29,9 +31,10 @@ if (!isset($_SESSION['login_id'])) {
     exit(); 
 }
 
-$customer_id = $_SESSION['customer_id'];
-$ses->checksession($customer_id);
+
+$ses->checksession();
 $sesArr['login_id'] = $_SESSION['login_id'];
+
 
 
 // モード判定(どの画面から来たか判断)
@@ -86,21 +89,10 @@ switch ($mode) {
     
     case 'complete': // 登録完了
         $dataArr = $_POST;
+        $customer_id = $_SESSION['customer_id'];
 
-        unset($dataArr['complete']);
-        unset($dataArr['pass2']);
-        unset($dataArr['customer_id']);
+        $res = $cus->updateCustomer($dataArr, $customer_id);
 
-        $dataArr['pass1'] = md5($dataArr['pass1']);
-        $dataArr['update_date'] = date("Y/m/d H:i:s");
-
-        $table = 'customer';
-        $where = 'customer_id = ?';
-        $arrWhereVal = [$customer_id];
-
-        $res = $db->update($table, $dataArr, $where, $arrWhereVal);
-
-        
         if ($res === true) {
             // 登録成功時は完成ページへ
             header('Location:' . Bootstrap::ENTRY_URL . 'cus_complete.php');
@@ -118,11 +110,10 @@ switch ($mode) {
 
 $sexArr = initMaster::getSex();
 
-$context['sexArr'] = $sexArr;
-
 list($yearArr, $monthArr, $dayArr) = initMaster::getDate();
 
 $context = [];
+$context['sexArr'] = $sexArr;
 $context['yearArr'] = $yearArr;
 $context['monthArr'] = $monthArr;
 $context['dayArr'] = $dayArr;

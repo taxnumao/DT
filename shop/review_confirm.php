@@ -32,8 +32,8 @@ if (!isset($_SESSION['sale'])) {
 }
 
 // sessionチェック
-$customer_id = $_SESSION['customer_id'];
-$ses->checksession($customer_id);
+$ses->checksession();
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 // モード判定(どの画面から来たか判断)
 // 登録画面から来た場合
@@ -83,7 +83,8 @@ switch ($mode) {
     case 'complete': // 登録完了
 
         $insData = $_POST;
-        unset($insData['complete']);
+
+        $customer_id = $_SESSION['customer_id'];
         
         $res = $rev->insReviewData($insData, $customer_id);
         
@@ -108,6 +109,7 @@ $entryArr = initMaster::getEntry();
 $context['scoreArr'] = $scoreArr;
 $context['entryArr'] = $entryArr;
 $context['dataArr'] = $dataArr;
+$context['sesArr'] = $sesArr;
 $context['errArr'] = $errArr;
 $template = $twig->loadTemplate($template);
 $template->display($context);

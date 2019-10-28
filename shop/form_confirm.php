@@ -10,7 +10,9 @@ require_once dirname(__FILE__) . '/Bootstrap.class.php';
 
 use shop\master\initMaster;
 use shop\lib\PDODatabase;
+use shop\lib\Session;
 use shop\lib\Common;
+use shop\lib\Inquiry;
 
 
 // テンプレート指定
@@ -21,6 +23,11 @@ $twig = new \Twig_Environment($loader, [
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $common = new Common();
+$ses = new Session($db);
+$inq = new Inquiry($db);
+
+$ses->checkSession();
+$sesArr['login_id'] = isset($_SESSION['login_id']) ? $_SESSION['login_id'] : '' ;
 
 // モード判定(どの画面から来たか判断)
 // 登録画面から来た場合
@@ -75,14 +82,8 @@ switch ($mode) {
     case 'complete': // 登録完了
         $dataArr = $_POST;
 
-        unset($dataArr['complete']);
+        $res = $inq->insInquiryData($dataArr);
 
-        $table = 'inquiry';
-        
-        $res = '';
-        $res = $db->insert($table, $dataArr);
-
-        
         if ($res === true) {
 
             // 登録成功時は完成ページへ
@@ -103,6 +104,7 @@ $sexArr = initMaster::getSex();
 $context['sexArr'] = $sexArr;
 $context['dataArr'] = $dataArr;
 $context['errArr'] = $errArr;
+$context['sesArr'] = $sesArr;
 $template = $twig->loadTemplate($template);
 $template->display($context);
 

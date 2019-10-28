@@ -19,12 +19,6 @@ $ses = new Session($db);
 $itm = new Item($db);
 $rev = new Review($db);
 
-// 未ログイン排除
-if (!isset($_SESSION['login_id'])) {
-    header('location:'. Bootstrap::ENTRY_URL . 'list_guest.php');
-    exit(); 
-}
-
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [
@@ -32,11 +26,10 @@ $twig = new \Twig_Environment($loader, [
 ]);
 
 // SessionKeyを見て、DBへの登録状態をチェックする
-$customer_id = $_SESSION['customer_id'];
-$ses->checkSession($customer_id);
-$customer_no = $_SESSION['customer_no']; 
+$ses->checkSession();
 
 $sesArr['login_id'] = $_SESSION['login_id'];
+
 
 // カテゴリーリスト(一覧)を取得
 $ctg_id = (isset($_GET['ctg_id']) === true && preg_match('/^[0-9]+$/', $_GET['ctg_id']) === 1) ? $_GET['ctg_id'] : '';
@@ -54,17 +47,31 @@ if ($text) {
     $dataArr = $itm->getItemList($ctg_id);
 }
 
+foreach ($dataArr as $key => $value) {
+    if ($key % 2 != 0 ) {
+        $dataArrOdd[] = $value;
+    } else {
+        $dataArrEven[] = $value;
+    }
+}
+
+
 // 口コミを取得
 $reviewArr = $rev->getReviewData();
 
 $context = [];
 // $context['msg'] = $msg;
 $context['cateArr'] = $cateArr;
-$context['dataArr'] = $dataArr;
+$context['dataArrOdd'] = $dataArrOdd;
+$context['dataArrEven'] = $dataArrEven;
 $context['sesArr'] = $sesArr;
 $context['reviewArr'] = $reviewArr;
 $template = $twig->loadTemplate('list.html.twig');
 $template->display($context);
+
+
+
+
 
 
 

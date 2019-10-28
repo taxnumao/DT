@@ -2,22 +2,19 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>REVIEW</title>
+        <title>会員登録</title>
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="{{constant('shop\\Bootstrap::APP_URL')}}js/common.js"></script>
     </head>
     <body>
         <div class="box1">
             <div class="site">
                 <h1><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php"> KINU NAVI </a><h1>
-                <p>{% if sesArr.login_id | length > 0 %} 
-                        {{sesArr.login_id}}さん、こんにちは <i class="far fa-laugh"></i>
-                   {% else %} 
-                        ゲストさん、こんにちは <i class="far fa-laugh"></i>
-                   {% endif %}
-                </p>
+                <p>{% if sesArr.login_id | length > 0 %} {{sesArr.login_id}}さん、こんにちわ！{% else %} ゲストさん、こんにちわ！ {% endif %}</p>
             </div>
         </div>
 
@@ -37,34 +34,59 @@
                         {% if sesArr.login_id | length > 0 %}<li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}logout.php">LOGOUT <i class="fas fa-sign-out-alt"></i></a></li>{% endif %}
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}form.php">CONTACT <i class="far fa-paper-plane"></i></a></li>
                     </ul>
-                </nav> 
+                </nav>
             </div>
         </div>
 
         <div class="boxA">
             <div class="box3">
-                <article class="review">
-                    <h1>投稿確認</h1>
+                <article class="data">
                     <section>
-                        <form method="post" action="review_confirm.php">
+                        <form method="post" action="signup_confirm.php">
                             <table>
                                 <tr>
-                                    <th>ニックネーム</th>
-                                    <td>{{dataArr.nickname}}</td>
+                                    <th>お名前(氏名)</th>
+                                    <td>{{dataArr.family_name}} {{dataArr.first_name}}</td>
                                 </tr>
                                 <tr>
-                                    <th>評価</th>
-                                    <td>{{dataArr.score}}点</td>
+                                    <th>お名前(かな)</th>
+                                    <td>{{dataArr.family_name_kana}} {{dataArr.first_name_kana}}</td>
                                 </tr>
                                 <tr>
-                                    <th>項目</th>
-                                    <td>{% if dataArr.entry == '1' %}商品について{% elseif dataArr.entry == '2' %}配送について{% elseif dataArr.entry == '3' %}その他{% endif  %}</td>
+                                    <th>性別</th>
+                                    <td>{% if dataArr.sex == '1' %}男性{% elseif dataArr.sex == '2'  %}女性{% endif  %}</td>
                                 </tr>
                                 <tr>
-                                    <th>口コミ内容</th>
+                                    <th>生年月日</th>
+                                    <td>{{dataArr.year}}年 {{dataArr.month}}月 {{dataArr.day}}日</td>
+                                </tr>
+                                <tr>
+                                    <th>ログインID</th>
+                                    <td>{{dataArr.login_id}} </td>
+                                    <td><span class="red">*ログイン時、必要になります</span></td>
+                                </tr>
+                                <tr>
+                                    <th>郵便番号</th>
+                                    <td>{{dataArr.zip1}} - {{dataArr.zip2}}</td>
+                                </tr>
+                                <tr>
+                                    <th>住所</th>
+                                    <td>{{dataArr.address}}</td>
+                                </tr>
+                                <tr>
+                                    <th>メールアドレス</th>
+                                    <td>{{dataArr.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th>電話番号</th>
+                                    <td>{{dataArr.tel1}} - {{dataArr.tel2}} - {{dataArr.tel3}}</td>
+                                </tr>
+                                <tr>
+                                    <th>備考</th>
                                     <td>{{dataArr.contents|nl2br}}</td>
                                 </tr>
                             </table>
+                            <input type="hidden" name ="login_id" value="{{dataArr.login_id}}">
                             <input type="submit" name="back" value="戻る" />
                             <input type="submit" name="complete" value="登録完了" />
                             {% for key,value in dataArr %}
@@ -81,7 +103,6 @@
                     </section>
                 </article>
             </div>
-            
             <div class="box4">
                 <aside class="kuchi" >
                     <h1>口コミ <i class="far fa-thumbs-up"></i></h1>

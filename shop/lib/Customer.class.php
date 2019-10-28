@@ -30,6 +30,23 @@ class Customer {
         return $res;
     }
 
+    // 顧客編集
+    public function updateCustomer($dataArr, $customer_id) {
+        
+        unset($dataArr['complete']);
+        unset($dataArr['pass2']);
+        unset($dataArr['customer_no']);
+
+        $dataArr['pass1'] = md5($dataArr['pass1']);
+        $dataArr['update_date'] = date("Y/m/d H:i:s");
+
+        $table = 'customer';
+        $where = 'customer_id = ?';
+        $arrWhereVal = [$customer_id];
+
+        return $this->db->update($table, $dataArr, $where, $arrWhereVal);
+    }
+
     // 顧客データ(mail用)の取得
     public function getCustomer($customer_id) {
         $table = 'customer';

@@ -17,10 +17,8 @@ use shop\lib\Login;
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [
-    'cache' => Bootstrap::CACHE_DIR,
-    'debug' => true
+    'cache' => Bootstrap::CACHE_DIR
 ]);
-$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $common = new Common();
@@ -61,13 +59,11 @@ switch ($mode) {
 
             if ($data) {
 
-                var_dump($data);
-
-                $customer_id = $data[0]['customer_id'];
                 $ses = new Session($db);
-                $ses->checkSession($customer_id);
+                $ses->checkSession();
                 $_SESSION['login_id'] = $_POST['login_id'];
-                $_SESSION['customer_id'] = $customer_id;
+                $_SESSION['customer_id'] = $data[0]['customer_id'];
+
                 //ログイン成功時は商品リストページへ
                 header('Location:' . Bootstrap::ENTRY_URL . 'list.php');
                 exit();

@@ -10,9 +10,15 @@ body {
     margin-left: 10px;
 }
 
-li {
-    list-style-type : none;
+img {
+    width: 200px;
+    height: 200px;
 }
+
+img:hover {
+    opacity: 0.8;
+}
+
 
 li.name a, li.detail a {
     text-decoration: none;
@@ -21,7 +27,8 @@ li.name a, li.detail a {
 
 li.name a:hover, li.detail a:hover {
     font-weight: bold;
-    border-bottom: solid 1px rgb(207, 35, 35);
+    border-left: ridge 10px red;
+    border-right: ridge 10px red;
 }
 li.price {
     color: rgb(143, 6, 6);
@@ -84,13 +91,46 @@ li.price {
     width: auto;
 }
 
+/* 商品リスト */
+
+div#category a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5em 1em;
+    color: #020303;
+    border: dashed 1px #98d3f8;
+    background: #f2fcff;
+    border-radius: 3px;
+    transition: .4s;
+}
+
+div#category a:hover {
+    background: #cbedff;
+    color: #FFF;
+}
+
+div.item_left li, div.item_right li {
+    list-style: none;
+}
+
+.item_left {
+    float: left;
+    width: 50%;
+}
+
+.item_right {
+    float: left;
+    width: 50%;
+}
+
+
 /* 口コミ */
 
 .kuchi h1 {
     margin-top: 0;
     margin-bottom: 10px;
-    border-bottom: dotted 2px #dddddd;
-    color: #dddddd;
+    border-bottom: dotted 2px #384ba3;
+    color: #384ba3;
     font-size: 18px;
 }
 
@@ -98,10 +138,30 @@ li.price {
 .ninki h1 {
     margin-top: 0;
     margin-bottom: 10px;
-    border-bottom: dotted 2px #dddddd;
-    color: #dddddd;
+    border-bottom: dotted 2px #c7ca1e;
+    color: #c7ca1e;
     font-size: 18px;
 }
+aside.ninki a {
+    text-decoration: none;
+    color: black;
+}
+
+aside.ninki a:hover {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+aside.ninki li {
+    color: rgb(143, 6, 6);
+}
+
+aside.ninki li img {
+    width: 100px;
+    height: 100px;
+}
+
 
 /* コピーライト */
 .copyright p {
@@ -110,7 +170,7 @@ li.price {
     font-size: 14px;
 }
 
-/* バーの色つけ */
+/* 配置とバーの色つけ */
 .box1 {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -139,43 +199,6 @@ li.price {
 .box6 {
     padding-top: 10px;
     padding-bottom: 10px;
-}
-
-/* rgb(138, 207, 138) */
-
-div#category a {
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.5em 1em;
-    color: #020303;
-    border: dashed 1px #98d3f8;
-    background: #f2fcff;
-    border-radius: 3px;
-    transition: .4s;
-}
-/* #98d3f8 */
-
-div#category a:hover {
-    background: #cbedff;
-    color: #FFF;
-}
-img {
-    width: 200px;
-    height: 200px;
-}
-
-img:hover {
-    opacity: 0.8;
-}
-
-.item_left {
-    float: left;
-    width: 50%;
-}
-
-.item_right {
-    float: left;
-    width: 50%;
 }
 
 

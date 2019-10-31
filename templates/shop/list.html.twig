@@ -75,6 +75,9 @@
                                 <li class="name">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">{{value.item_name}}</a>
                                 </li>
+                                <li class="price">
+                                    &yen;{{value.price|number_format(0, '.', ',')}}
+                                </li>
                                 <li class="image">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
                                     <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
@@ -82,9 +85,6 @@
                                 </li>
                                 <li class="detail">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">詳細</a>
-                                </li>
-                                <li class="price">
-                                    &yen;{{value.price|number_format(0, '.', ',')}}
                                 </li>
                                 <li class="cart">
                                     <input type="hidden" name="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}" id="entry_url" >
@@ -100,6 +100,9 @@
                                 <li class="name">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">{{value.item_name}}</a>
                                 </li>
+                                <li class="price">
+                                    &yen;{{value.price|number_format(0, '.', ',')}}
+                                </li>
                                 <li class="image">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
                                     <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
@@ -107,9 +110,6 @@
                                 </li>
                                 <li class="detail">
                                     <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">詳細</a>
-                                </li>
-                                <li class="price">
-                                    &yen;{{value.price|number_format(0, '.', ',')}}
                                 </li>
                                 <li class="cart">
                                     <input type="hidden" name="entry_url" value="{{constant('shop\\Bootstrap::ENTRY_URL')}}" id="entry_url" >
@@ -126,16 +126,33 @@
             <div class="box4">
                 <aside class="kuchi" >
                     <h1>口コミ <i class="far fa-thumbs-up"></i></h1>
+                    <section>
                         {% for value in reviewArr %}
                         <p>{{value.nickname}}さん &nbsp; {{value.regist_date}}<br>
                         点数:{{value.score}}点 &nbsp; {% if value.entry == '1' %}商品について{% elseif value.entry == '2'  %}配送について{% elseif value.entry == '3'  %}その他{% endif  %}<br>
                         内容: {{value.contents}}<br>
                         </p>
                         {% endfor %} 
+                    </section>
                 </aside>
 
                 <aside class="ninki" >
                     <h1>人気商品 <i class="fas fa-crown"></i></h1>
+                    <section>
+                        <ol>
+                        {% for value in rankArr %}
+                            <li>
+                                <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
+                                    {{value.item_name}}
+                                </a><br>
+                                &yen;{{value.price|number_format(0, '.', ',')}}<br>
+                                <a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}detail.php?item_id={{value.item_id}}">
+                                    <img src="{{constant('shop\\Bootstrap::ENTRY_URL')}}images/{{value.image}}" alt="{{value.item_name}}">
+                                </a><br>
+                            </li><br>
+                        {% endfor %}
+                        </ol>
+                    </section>
                 </aside>
             </div>
         </div>

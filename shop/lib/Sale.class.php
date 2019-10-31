@@ -53,14 +53,27 @@ class Sale
     }
 
 
-    // 売上情報を取得
-    public function getSaleData($customer_no)
+    // 売上情報を取得(購入履歴)
+    public function getSaleData($customer_id)
     {
-        $table = ' sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no LEFT JOIN item i ON i.item_id = d.item_id';
-        $where = ' s.customer_no = ? ';
-        $arrVal = [$customer_no];
+        $table = 'sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no LEFT JOIN item i ON i.item_id = d.item_id　LEFT JOIN cart c ON c.customer_no = s.customer_no';
+        $where = 'c.customer_id = ? ';
+        $arrVal = [$customer_id];
 
         return $this->db->select($table, $column = '', $where, $arrVal);
     }
 
+    // 売上ランキングを取得
+    public function getSaleRank()
+    {
+        $table = 'sale_detail d JOIN item i ON d.item_id = i.item_id ';
+        $column = 'd.item_id, i.item_name, i.price, i.image, SUM(d.num) as totalnum';
+        $groupby = 'i.item_id';
+        $strOrder = 'totalnum DESC';
+        $this->db->setGroupby($groupby);
+        $this->db->setOrder($strOrder);
+
+
+        return $this->db->select($table, $column, $where = '', $arrVal = []);
+    }
 }

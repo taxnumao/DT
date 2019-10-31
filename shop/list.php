@@ -13,11 +13,13 @@ use shop\lib\PDODatabase;
 use shop\lib\Session;
 use shop\lib\Item;
 use shop\lib\Review;
+use shop\lib\Sale;
 
 $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS, Bootstrap::DB_NAME, Bootstrap::DB_TYPE);
 $ses = new Session($db);
 $itm = new Item($db);
 $rev = new Review($db);
+$sale = new Sale($db);
 
 // テンプレート指定
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
@@ -55,9 +57,14 @@ foreach ($dataArr as $key => $value) {
     }
 }
 
-
 // 口コミを取得
 $reviewArr = $rev->getReviewData();
+
+// ランキング取得
+$Arr = $sale->getSaleRank();
+for ($i=0; $i<5; $i ++) {
+    $rankArr[] = $Arr[$i];
+}
 
 $context = [];
 // $context['msg'] = $msg;
@@ -65,7 +72,9 @@ $context['cateArr'] = $cateArr;
 $context['dataArrOdd'] = $dataArrOdd;
 $context['dataArrEven'] = $dataArrEven;
 $context['sesArr'] = $sesArr;
+$context['rankArr'] = $rankArr;
 $context['reviewArr'] = $reviewArr;
+
 $template = $twig->loadTemplate('list.html.twig');
 $template->display($context);
 

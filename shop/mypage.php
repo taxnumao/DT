@@ -37,8 +37,8 @@ $ses->checkSession();
 $sesArr['login_id'] = $_SESSION['login_id'];
 
 // 売上取得
-$customer_no = $_SESSION['customer_no'];
-$saleArr = $sale->getSaleData($customer_no);
+$customer_id = $_SESSION['customer_id'];
+$saleArr = $sale->getSaleData($customer_id);
 
 $context = [];
 $context['sesArr'] = $sesArr;

@@ -24,6 +24,9 @@ $twig = new \Twig_Environment($loader, [
 
 // セッションに、セッションIDを設定する
 $ses->checkSession();
+if (!isset($_SESSION['login_id']) || $_SESSION['login_id'] == '') {
+    $_SESSION['login_id'] = '';
+}
 $sesArr['login_id'] = $_SESSION['login_id'];
 
 $dataArr = $rev->getReviewData();

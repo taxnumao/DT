@@ -6,7 +6,10 @@ mysql -u root
   	CREATE DATABASE shopping_db DEFAULT CHARACTER SET utf8;
 
 
+
 	GRANT ALL PRIVILEGES ON shop_db.* TO shop_user@'localhost' IDENTIFIED BY 'shop_pass' WITH GRANT OPTION;
+
+
 
 
     

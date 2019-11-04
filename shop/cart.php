@@ -18,11 +18,6 @@ $db = new PDODatabase(Bootstrap::DB_HOST, Bootstrap::DB_USER, Bootstrap::DB_PASS
 $ses = new Session($db);
 $cart = new Cart($db);
 
-// 未ログイン排除
-if (!isset($_SESSION['login_id'])) {
-    header('Location:' . Bootstrap::ENTRY_URL . 'login.php');
-    exit();
-}
 
 $loader = new \Twig_Loader_Filesystem(Bootstrap::TEMPLATE_DIR);
 $twig = new \Twig_Environment($loader, [
@@ -34,6 +29,13 @@ $ses->checkSession();
 $customer_no = $_SESSION['customer_no'];   //sessionCheck();でセットしてる
 $customer_id = $_SESSION['customer_id'];
 $sesArr['login_id'] = $_SESSION['login_id'];
+
+
+// 未ログイン排除
+if (!isset($_SESSION['login_id']) || $_SESSION['login_id'] == '') {
+    header('Location:' . Bootstrap::ENTRY_URL . 'login.php');
+    exit();
+}
 
 
 // item_idを取得する

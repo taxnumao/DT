@@ -30,8 +30,11 @@ $twig = new \Twig_Environment($loader, [
 // SessionKeyを見て、DBへの登録状態をチェックする
 $ses->checkSession();
 
-$sesArr['login_id'] = $_SESSION['login_id'];
+if (isset($_SESSION['login_id']) !== true) {
+    $_SESSION['login_id'] = '';
+}
 
+$sesArr['login_id'] = $_SESSION['login_id'];
 
 // カテゴリーリスト(一覧)を取得
 $ctg_id = (isset($_GET['ctg_id']) === true && preg_match('/^[0-9]+$/', $_GET['ctg_id']) === 1) ? $_GET['ctg_id'] : '';

@@ -56,7 +56,7 @@ class Sale
     // 売上情報を取得(購入履歴)
     public function getSaleData($customer_id)
     {
-        $table = 'sale_detail d LEFT JOIN sale s ON d.sale_no = s.sale_no LEFT JOIN item i ON i.item_id = d.item_id　LEFT JOIN cart c ON c.customer_no = s.customer_no';
+        $table = 'sale s LEFT JOIN sale_detail d ON s.sale_no = d.sale_no LEFT JOIN cart c ON s.customer_no = c.customer_no LEFT JOIN item i ON c.item_id = i.item_id';
         $where = 'c.customer_id = ? ';
         $arrVal = [$customer_id];
 

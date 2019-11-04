@@ -19,7 +19,7 @@ $sale = new Sale($db);
 
 // 未ログイン排除
 if (!isset($_SESSION['login_id'])) {
-    header('location:'. Bootstrap::ENTRY_URL . 'list_guest.php');
+    header('location:'. Bootstrap::ENTRY_URL . 'login.php');
     exit(); 
 }
 

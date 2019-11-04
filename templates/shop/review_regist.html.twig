@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>REVIEW</title>
+        <title>KINU NAVI</title>
         <link href="{{constant('shop\\Bootstrap::APP_URL')}}css/sample.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Paytone+One&display=swap" rel="stylesheet">
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -27,8 +27,8 @@
                     <ul>
                         <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}list.php">HOME <i class="fas fa-home"></i></a></li>
                         {% if sesArr.login_id | length == 0 %}
-                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
                             <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}login.php">LOGIN <i class="fas fa-key"></i></a></li>
+                            <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}signup.php">SIGN UP <i class="fas fa-user-plus"></i></a></li>
                         {% else %}
                             <li><a href="{{constant('shop\\Bootstrap::ENTRY_URL')}}mypage.php">MYPAGE <i class="far fa-id-card"></i></a></li>
                         {% endif %}
